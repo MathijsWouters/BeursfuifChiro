@@ -1,1 +1,2 @@
-# BeursfuifChiro
+# Beursfuif
+chiro app beursfuif
