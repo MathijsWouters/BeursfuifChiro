@@ -7,19 +7,19 @@ namespace beursfuif
     {
         private bool mouseDown;
         private Point lastLocation;
+        List<Control> associatedControls = new List<Control>();
 
         public Form1()
         {
             InitializeComponent();
             this.Text = "Beursfuif";
-
-
             // Form properties
             this.BackColor = Color.FromArgb(45, 45, 48);
             this.ForeColor = Color.White;
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
-
+            // Set initial position of the addButton
+            UpdateAddButtonPosition();
             // Label properties
 
             // TextBox properties
@@ -79,12 +79,6 @@ namespace beursfuif
                 int maxLocationX = normalLocationX + 100;
                 int textBoxLocationX = maxLocationX + 100;
                 int deleteButtonLocationX = textBoxLocationX + 200;
-                // Min Price NumericUpDown and Label
-                CreatePriceControl(minLocationX, yOffset, "Min");
-                // Normal Price NumericUpDown and Label
-                CreatePriceControl(normalLocationX, yOffset, "Normal");
-                // Max Price NumericUpDown and Label
-                CreatePriceControl(maxLocationX, yOffset, "Max");
                 // Drink TextBox
                 TextBox newTextBox = new TextBox();
                 newTextBox.Location = new Point(textBoxLocationX, yOffset);
@@ -93,11 +87,26 @@ namespace beursfuif
                 newTextBox.Leave += (s, ev) => SetPlaceholder(newTextBox, "Drink");
                 drinkTextBoxes.Add(newTextBox);
                 this.Controls.Add(newTextBox);
-                // Delete Button
+
+                // Min Price NumericUpDown and Label
+                var minPriceControls = CreatePriceControl(minLocationX, yOffset, "Min");
+                // Normal Price NumericUpDown and Label
+                var normalPriceControls = CreatePriceControl(normalLocationX, yOffset, "Normal");
+                // Max Price NumericUpDown and Label
+                var maxPriceControls = CreatePriceControl(maxLocationX, yOffset, "Max");
+
+                associatedControls.Add(newTextBox);
+                associatedControls.Add(minPriceControls.Item1); // Add Label
+                associatedControls.Add(minPriceControls.Item2); // Add NumericUpDown
+                associatedControls.Add(normalPriceControls.Item1);
+                associatedControls.Add(normalPriceControls.Item2);
+                associatedControls.Add(maxPriceControls.Item1);
+                associatedControls.Add(maxPriceControls.Item2);
+
                 Button deleteButton = new Button();
                 deleteButton.Text = "Delete";
                 deleteButton.Location = new Point(deleteButtonLocationX, yOffset);
-                deleteButton.Tag = newTextBox;
+                deleteButton.Tag = associatedControls;  // Here's the change
                 deleteButton.Click += DeleteButton_Click;
                 deleteButtons.Add(deleteButton);
                 this.Controls.Add(deleteButton);
@@ -136,29 +145,38 @@ namespace beursfuif
         private void UpdateAddButtonPosition()
         {
             // Adjust the positioning so the button is always above the latest TextBox
-            int yOffset = (drinkTextBoxes.Count == 0) ? 80 : 80 + drinkTextBoxes.Count * 30;
-            addButton.Location = new Point(this.ClientSize.Width - 300, yOffset);  
+            int yOffset = 80 + drinkTextBoxes.Count * 30;
+            addButton.Location = new Point(this.ClientSize.Width - 300, yOffset);
         }
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             Button deleteButton = sender as Button;
-            TextBox associatedTextBox = deleteButton.Tag as TextBox;
-            // Remove the TextBox and Button from the form and their respective lists
-            this.Controls.Remove(associatedTextBox);
-            drinkTextBoxes.Remove(associatedTextBox);
+            List<Control> associatedControls = deleteButton.Tag as List<Control>;
+
+            foreach (Control ctrl in associatedControls)
+            {
+                this.Controls.Remove(ctrl);
+                if (ctrl is TextBox)
+                {
+                    drinkTextBoxes.Remove(ctrl as TextBox);
+                }
+            }
             this.Controls.Remove(deleteButton);
             deleteButtons.Remove(deleteButton);
+
             // Rearrange the remaining TextBoxes and Delete buttons
             for (int i = 0; i < drinkTextBoxes.Count; i++)
             {
                 drinkTextBoxes[i].Location = new Point(this.ClientSize.Width - 300, 80 + i * 30);
                 deleteButtons[i].Location = new Point(this.ClientSize.Width - 200, 80 + i * 30);
             }
+
             // If there are less than 9 TextBoxes, make the addButton visible again
             if (drinkTextBoxes.Count < 9)
             {
                 addButton.Visible = true;
             }
+
             // Update the position of addButton
             UpdateAddButtonPosition();
         }
@@ -193,19 +211,23 @@ namespace beursfuif
                 nud.Tag = placeholder;
             }
         }
-        private void CreatePriceControl(int xLocation, int yOffset, string type)
+        private Tuple<Label, NumericUpDown> CreatePriceControl(int xLocation, int yOffset, string type)
         {
             Label label = new Label();
             label.Text = type;
             label.ForeColor = Color.Gray;
             label.Location = new Point(xLocation, yOffset);
             this.Controls.Add(label);
+
             NumericUpDown numericUpDown = new NumericUpDown();
             numericUpDown.Location = new Point(xLocation + 40, yOffset); // Place it 40 pixels to the right of the label
             numericUpDown.Tag = type;
             numericUpDown.Enter += (s, ev) => ClearPlaceholder(numericUpDown, label, type);
             numericUpDown.Leave += (s, ev) => SetPlaceholder(numericUpDown, label, type);
             this.Controls.Add(numericUpDown);
+
+            return new Tuple<Label, NumericUpDown>(label, numericUpDown);
         }
+
     }
 }
