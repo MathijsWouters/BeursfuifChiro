@@ -10,6 +10,7 @@ namespace beursfuif
         private int textBoxLocationX = 0;
         List<Control> associatedControls = new List<Control>();
 
+
         public Form1()
         {
             InitializeComponent();
@@ -20,7 +21,7 @@ namespace beursfuif
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             // Set initial position of the addButton
-            
+
             // Label properties
 
             // TextBox properties
@@ -69,6 +70,11 @@ namespace beursfuif
         {
             Form2 form2 = new Form2();
             form2.Show();
+        }
+        private void AddDrinksButton_Click(object sender, EventArgs e)
+        {
+            AddDrinksForm addDrinksForm = new AddDrinksForm();
+            addDrinksForm.Show();
         }
 
     }
