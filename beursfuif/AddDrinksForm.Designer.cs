@@ -53,7 +53,7 @@
             Drinkname.Name = "Drink";
             Drinkname.Size = new Size(137, 27);
             Drinkname.TabIndex = 0;
-            Drinkname.TextChanged += Drink_TextChanged;
+            
             // 
             // ColorPicker
             // 
@@ -76,7 +76,7 @@
             Min.Name = "Min";
             Min.Size = new Size(137, 27);
             Min.TabIndex = 2;
-            Min.ValueChanged += Min_ValueChanged;
+            
             // 
             // Max
             // 
@@ -86,7 +86,7 @@
             Max.Name = "Max";
             Max.Size = new Size(137, 27);
             Max.TabIndex = 3;
-            Max.ValueChanged += Max_ValueChanged;
+            
             // 
             // Interval
             // 

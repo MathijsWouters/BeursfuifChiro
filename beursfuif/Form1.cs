@@ -9,6 +9,8 @@ namespace beursfuif
         private bool mouseDown;
         private Point lastLocation;
         private int textBoxLocationX = 0;
+        private int drinkCount = 0;
+        private FlowLayoutPanel flowLayoutPanel;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
 
@@ -82,38 +84,31 @@ namespace beursfuif
             addDrinksForm.DrinkAdded += OnDrinkAdded;
             addDrinksForm.Show();
         }
-        private void OnDrinkAdded(Drink drink)
+        private void OnDrinkAdded(Drink newDrink)
         {
-            drinks.Add(drink);
-            comboBox1.Items.Add(drink.Name);
-            comboBox1.DisplayMember = "Name";
+            drinkCount++;
+            Button drinkButton = CreateDrinkButton(newDrink, drinkCount);
+            // Set the location for your button, e.g., use the drinkCount to position it in a grid layout
+            // For now, just setting a sample location:
+            flowLayoutPanel.Controls.Add(drinkButton); // Add the button to Form1
+
+
         }
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private Button CreateDrinkButton(Drink drink, int drinkNumber)
         {
-            Console.WriteLine("comboBox1_SelectedIndexChanged called.");
+            Button drinkButton = new Button();
+            drinkButton.Width = 150;
+            drinkButton.Height = 80; 
+            drinkButton.BackColor = drink.Color;
+            drinkButton.Margin = new Padding(5);
 
-            var selectedDrink = comboBox1.SelectedItem as Drink;
-            if (selectedDrink != null)
-            {
-                Console.WriteLine("Selected drink: " + selectedDrink.Name);
+            decimal averagePrice = (drink.MinPrice + drink.MaxPrice) / 2;
+            string buttonText = $"{drinkNumber}\n{drink.Name}\n{averagePrice.ToString("F2")} EUR";
 
-                using (var detailsForm = new DrinkDetailsForm(selectedDrink))  // Pass the whole Drink object
-                {
-                    if (detailsForm.ShowDialog() == DialogResult.OK)
-                    {
-                        // If a drink was deleted, remove it from the comboBox
-                        if (detailsForm.DrinkDeleted)
-                        {
-                            drinks.Remove(selectedDrink);
-                            comboBox1.Items.Remove(selectedDrink);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("Selected item is not a drink or is null."); // Add this
-            }
+            drinkButton.Text = buttonText;
+            drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size, FontStyle.Bold);
+
+            return drinkButton;
         }
     }
 }

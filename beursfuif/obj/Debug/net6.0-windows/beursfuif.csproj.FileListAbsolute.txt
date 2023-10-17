@@ -66,4 +66,3 @@ C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\o
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\ref\beursfuif.dll
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.AddDrinksForm.resources
 C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.AddDrinksForm.resources
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.DrinkDetailsForm.resources

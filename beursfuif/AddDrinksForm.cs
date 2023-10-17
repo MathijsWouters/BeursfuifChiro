@@ -26,20 +26,6 @@ namespace beursfuif
             public decimal PriceInterval { get; set; }
             // Add other properties as needed
         }
-        private void Drink_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Min_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Max_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void ColorPicker_Click(object sender, EventArgs e)
         {
@@ -55,6 +41,19 @@ namespace beursfuif
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            // Check if Drinkname is empty
+            if (string.IsNullOrWhiteSpace(Drinkname.Text))
+            {
+                MessageBox.Show("Please enter a valid drink name.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Validate Min and Max values
+            if (Min.Value >= Max.Value)
+            {
+                MessageBox.Show("Minimum price should be less than maximum price.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             Drink newDrink = new Drink
             {
                 Name = Drinkname.Text,
