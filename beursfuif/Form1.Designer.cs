@@ -34,7 +34,6 @@
             minimizeButton = new Button();
             maximizeButton = new Button();
             titleLabel = new Label();
-            addButton = new Button();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -116,14 +115,7 @@
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // addButton
-            // 
-            addButton = new Button();
-            addButton.Text = "Add Drink";
-            UpdateAddButtonPosition();
-            addButton.Click += AddButton_Click;
-            this.Controls.Add(addButton);
-
-            this.KeyDown += Form1_KeyDown;
+            //
             // 
             // Form1
             // 
@@ -132,11 +124,9 @@
             BackColor = SystemColors.Control;
             ClientSize = new Size(1409, 611);
             Controls.Add(titleBarPanel);
-            Controls.Add(addButton);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Load += Form1_Load;
-            KeyDown += Form1_KeyDown;
             titleBarPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -149,8 +139,6 @@
         private Button maximizeButton;
         private Label titleLabel;
         private Button openForm2Button;
-        private List<TextBox> drinkTextBoxes = new List<TextBox>();
-        private List<Button> deleteButtons = new List<Button>();
-        private Button addButton;
+
     }
 }
