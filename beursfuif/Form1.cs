@@ -90,9 +90,13 @@ namespace beursfuif
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Console.WriteLine("comboBox1_SelectedIndexChanged called.");
+
             var selectedDrink = comboBox1.SelectedItem as Drink;
             if (selectedDrink != null)
             {
+                Console.WriteLine("Selected drink: " + selectedDrink.Name);
+
                 using (var detailsForm = new DrinkDetailsForm(selectedDrink))  // Pass the whole Drink object
                 {
                     if (detailsForm.ShowDialog() == DialogResult.OK)
@@ -105,6 +109,10 @@ namespace beursfuif
                         }
                     }
                 }
+            }
+            else
+            {
+                Console.WriteLine("Selected item is not a drink or is null."); // Add this
             }
         }
     }
