@@ -29,18 +29,20 @@
         private void InitializeComponent()
         {
             titleBarPanel = new Panel();
+            addDrinksButton = new Button();
             openForm2Button = new Button();
             closeButton = new Button();
             minimizeButton = new Button();
             maximizeButton = new Button();
             titleLabel = new Label();
-            addDrinksButton = new Button();
+            comboBox1 = new ComboBox();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
             // 
             // titleBarPanel
             // 
             titleBarPanel.BackColor = Color.FromArgb(35, 35, 38);
+            titleBarPanel.Controls.Add(comboBox1);
             titleBarPanel.Controls.Add(addDrinksButton);
             titleBarPanel.Controls.Add(openForm2Button);
             titleBarPanel.Controls.Add(closeButton);
@@ -57,13 +59,24 @@
             titleBarPanel.MouseMove += titleBarPanel_MouseMove;
             titleBarPanel.MouseUp += titleBarPanel_MouseUp;
             // 
+            // addDrinksButton
+            // 
+            addDrinksButton.ForeColor = Color.White;
+            addDrinksButton.Location = new Point(105, 4);
+            addDrinksButton.Margin = new Padding(3, 4, 3, 4);
+            addDrinksButton.Name = "addDrinksButton";
+            addDrinksButton.Size = new Size(96, 28);
+            addDrinksButton.TabIndex = 4;
+            addDrinksButton.Text = "Add drinks";
+            addDrinksButton.Click += AddDrinksButton_Click;
+            // 
             // openForm2Button
             // 
             openForm2Button.ForeColor = Color.White;
-            openForm2Button.Location = new Point(3, 5);
+            openForm2Button.Location = new Point(3, 4);
             openForm2Button.Margin = new Padding(3, 4, 3, 4);
             openForm2Button.Name = "openForm2Button";
-            openForm2Button.Size = new Size(86, 31);
+            openForm2Button.Size = new Size(96, 28);
             openForm2Button.TabIndex = 0;
             openForm2Button.Text = "Beurs";
             openForm2Button.Click += OpenForm2Button_Click;
@@ -121,16 +134,18 @@
             titleLabel.Text = "Beursfuif";
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // addDrinksButton
+            // comboBox1
             // 
-            addDrinksButton.ForeColor = Color.White;
-            addDrinksButton.Location = new Point(95, 5);
-            addDrinksButton.Margin = new Padding(3, 4, 3, 4);
-            addDrinksButton.Name = "addDrinksButton";
-            addDrinksButton.Size = new Size(96, 31);
-            addDrinksButton.TabIndex = 4;
-            addDrinksButton.Text = "Add drinks";
-            addDrinksButton.Click += AddDrinksButton_Click;
+            comboBox1.BackColor = Color.Black;
+            comboBox1.ForeColor = Color.White;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(206, 4);
+            comboBox1.Margin = new Padding(3, 4, 3, 4);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(96, 28);
+            comboBox1.TabIndex = 5;
+            comboBox1.Text = "Drinks";
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // Form1
             // 
@@ -154,5 +169,6 @@
         private Label titleLabel;
         private Button openForm2Button;
         private Button addDrinksButton;
+        private ComboBox comboBox1;
     }
 }

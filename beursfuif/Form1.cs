@@ -1,5 +1,6 @@
 
 using System.Windows.Forms;
+using static beursfuif.AddDrinksForm;
 
 namespace beursfuif
 {
@@ -9,7 +10,7 @@ namespace beursfuif
         private Point lastLocation;
         private int textBoxLocationX = 0;
         List<Control> associatedControls = new List<Control>();
-
+        private List<Drink> drinks = new List<Drink>();
 
         public Form1()
         {
@@ -28,6 +29,10 @@ namespace beursfuif
 
 
             // Button properties
+            // Example of opening the AddDrinksForm
+            AddDrinksForm addDrinksForm = new AddDrinksForm();
+            addDrinksForm.DrinkAdded += OnDrinkAdded;
+            addDrinksForm.Show();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -74,8 +79,24 @@ namespace beursfuif
         private void AddDrinksButton_Click(object sender, EventArgs e)
         {
             AddDrinksForm addDrinksForm = new AddDrinksForm();
+            addDrinksForm.DrinkAdded += OnDrinkAdded;
             addDrinksForm.Show();
         }
-
+        private void OnDrinkAdded(Drink drink)
+        {
+            drinks.Add(drink);
+            comboBox1.Items.Add(drink.Name);
+            comboBox1.DisplayMember = "Name";
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedDrink = comboBox1.SelectedItem as Drink;
+            if (selectedDrink != null)
+            {
+                // Display details of selectedDrink.
+                // For example: 
+                // drinkDetailsLabel.Text = $"Name: {selectedDrink.Name}, Price: {selectedDrink.Price}"; 
+            }
+        }
     }
 }

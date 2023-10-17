@@ -16,7 +16,16 @@ namespace beursfuif
         {
             InitializeComponent();
         }
-
+        public delegate void DrinkAddedEventHandler(string drinkName);
+        public class Drink
+        {
+            public string Name { get; set; }
+            public Color Color { get; set; }  // If you're using System.Drawing.Color
+            public decimal MinPrice { get; set; }
+            public decimal MaxPrice { get; set; }
+            public decimal PriceInterval { get; set; }
+            // Add other properties as needed
+        }
         private void Drink_TextChanged(object sender, EventArgs e)
         {
 
@@ -46,7 +55,20 @@ namespace beursfuif
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            Drink newDrink = new Drink
+            {
+                Name = Drinkname.Text,
+                // Assuming you have properties like Color, MinPrice, MaxPrice, and PriceInterval in the Drink class:
+                Color = colorDialog1.Color,
+                MinPrice = (decimal)Min.Value,
+                MaxPrice = (decimal)Max.Value,
+                PriceInterval = (decimal)Interval.Value
+            };
 
+            DrinkAdded?.Invoke(newDrink);
+
+            this.Close();
         }
+
     }
 }
