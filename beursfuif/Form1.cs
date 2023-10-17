@@ -93,9 +93,18 @@ namespace beursfuif
             var selectedDrink = comboBox1.SelectedItem as Drink;
             if (selectedDrink != null)
             {
-                // Display details of selectedDrink.
-                // For example: 
-                // drinkDetailsLabel.Text = $"Name: {selectedDrink.Name}, Price: {selectedDrink.Price}"; 
+                using (var detailsForm = new DrinkDetailsForm(selectedDrink))  // Pass the whole Drink object
+                {
+                    if (detailsForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // If a drink was deleted, remove it from the comboBox
+                        if (detailsForm.DrinkDeleted)
+                        {
+                            drinks.Remove(selectedDrink);
+                            comboBox1.Items.Remove(selectedDrink);
+                        }
+                    }
+                }
             }
         }
     }

@@ -91,7 +91,7 @@
             // Interval
             // 
             Interval.AccessibleDescription = "";
-            Interval.AccessibleName = "Min";
+            Interval.AccessibleName = "Interval";
             Interval.DecimalPlaces = 2;
             Interval.Location = new Point(361, 237);
             Interval.Name = "Interval";
