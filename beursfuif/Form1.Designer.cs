@@ -36,12 +36,14 @@
             maximizeButton = new Button();
             titleLabel = new Label();
             flowLayoutPanel = new FlowLayoutPanel();
+            deleteDrinksButton = new Button();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
             // 
             // titleBarPanel
             // 
             titleBarPanel.BackColor = Color.FromArgb(35, 35, 38);
+            titleBarPanel.Controls.Add(deleteDrinksButton);
             titleBarPanel.Controls.Add(addDrinksButton);
             titleBarPanel.Controls.Add(openForm2Button);
             titleBarPanel.Controls.Add(closeButton);
@@ -135,6 +137,16 @@
             flowLayoutPanel.Size = new Size(650, 315);
             flowLayoutPanel.TabIndex = 1;
             // 
+            // deleteDrinksButton
+            // 
+            deleteDrinksButton.ForeColor = Color.White;
+            deleteDrinksButton.Location = new Point(182, 3);
+            deleteDrinksButton.Name = "deleteDrinksButton";
+            deleteDrinksButton.Size = new Size(84, 21);
+            deleteDrinksButton.TabIndex = 5;
+            deleteDrinksButton.Text = "Delete drinks";
+            deleteDrinksButton.Click += deleteDrinksButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -149,7 +161,6 @@
             titleBarPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
-
         #endregion
 
         private Panel titleBarPanel;
@@ -159,5 +170,6 @@
         private Label titleLabel;
         private Button openForm2Button;
         private Button addDrinksButton;
+        private Button deleteDrinksButton;
     }
 }

@@ -8,11 +8,11 @@ namespace beursfuif
     {
         private bool mouseDown;
         private Point lastLocation;
-        private int textBoxLocationX = 0;
         private int drinkCount = 0;
         private FlowLayoutPanel flowLayoutPanel;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
+        public bool DeleteModeEnabled { get; set; } = false;
         public Form1()
         {
             InitializeComponent();
@@ -83,12 +83,24 @@ namespace beursfuif
         {
             drinkCount++;
             Button drinkButton = CreateDrinkButton(newDrink, drinkCount);
-            // Set the location for your button, e.g., use the drinkCount to position it in a grid layout
-            // For now, just setting a sample location:
-            flowLayoutPanel.Controls.Add(drinkButton); // Add the button to Form1
+            flowLayoutPanel.Controls.Add(drinkButton);
+            drinks.Add(newDrink);
         }
         public class CustomButton : Button
         {
+            public bool Selected { get; set; } = false;
+            public bool DeleteModeEnabled { get; set; } = false;
+
+
+            protected override void OnClick(EventArgs e)
+            {
+                base.OnClick(e);
+                if (DeleteModeEnabled) // global variable to check if delete mode is on
+                {
+                    Selected = !Selected;
+                    this.BackColor = Selected ? Color.Red : Color.FromArgb(45, 45, 48); // change color if selected
+                }
+            }
             public Color LeftColor { get; set; } = Color.Blue; // Default color
             public Color RightColor { get; set; } = Color.FromArgb(30, 0, 0, 0); // Black tint
             protected override void OnPaint(PaintEventArgs pevent)
@@ -147,7 +159,52 @@ namespace beursfuif
             string buttonText = $"{drinkNumber}\n{drink.Name}\n{averagePrice.ToString("F2")} EUR";
             drinkButton.Text = buttonText;
             drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size * 1.5f, FontStyle.Bold);
+            drinkButton.Click += (s, e) =>
+            {
+                if (DeleteModeEnabled)
+                {
+                    var btn = s as CustomButton;
+                    btn.Selected = !btn.Selected;
+                    btn.BackColor = btn.Selected ? Color.Red : Color.FromArgb(45, 45, 48);
+                }
+            };
             return drinkButton;
+        }
+        private void deleteDrinksButton_Click(object sender, EventArgs e)
+        {
+            if (!flowLayoutPanel.Controls.OfType<CustomButton>().Any())
+            {
+                MessageBox.Show("No drinks to delete!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DeleteModeEnabled = !DeleteModeEnabled;
+            deleteDrinksButton.Text = DeleteModeEnabled ? "Confirm Deletion" : "Delete Drinks";
+
+            if (!DeleteModeEnabled)
+            {
+                // Handle the deletion
+                var drinksToDelete = flowLayoutPanel.Controls.OfType<CustomButton>().Where(b => b.Selected).ToList();
+                foreach (var btn in drinksToDelete)
+                {
+                    var drinkToRemove = drinks.FirstOrDefault(d => $"{d.Name}\n{((d.MinPrice + d.MaxPrice) / 2).ToString("F2")} EUR" == btn.Text.Split('\n')[1]);
+                    if (drinkToRemove != null)
+                    {
+                        drinks.Remove(drinkToRemove);
+                    }
+                }
+                RefreshDrinkLayout();
+            }
+        }
+
+        private void RefreshDrinkLayout()
+        {
+            int counter = 1;
+            foreach (var control in flowLayoutPanel.Controls.OfType<CustomButton>())
+            {
+                string[] lines = control.Text.Split('\n');
+                control.Text = $"{counter}\n{lines[1]}\n{lines[2]}";
+                counter++;
+            }
         }
     }
 }
