@@ -8,11 +8,11 @@ namespace beursfuif
     {
         private bool mouseDown;
         private Point lastLocation;
-        private int drinkCount = 0;
         private FlowLayoutPanel flowLayoutPanel;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
         public bool DeleteModeEnabled { get; set; } = false;
+        public event DrinkAddedEventHandler DrinkAdded;
         public Form1()
         {
             InitializeComponent();
@@ -81,10 +81,10 @@ namespace beursfuif
         }
         private void OnDrinkAdded(Drink newDrink)
         {
-            drinkCount++;
-            Button drinkButton = CreateDrinkButton(newDrink, drinkCount);
+            Button drinkButton = CreateDrinkButton(newDrink, drinks.Count + 1);
             flowLayoutPanel.Controls.Add(drinkButton);
             drinks.Add(newDrink);
+            RefreshDrinkLayout();
         }
         public class CustomButton : Button
         {
@@ -177,10 +177,8 @@ namespace beursfuif
                 MessageBox.Show("No drinks to delete!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            DeleteModeEnabled = !DeleteModeEnabled;
-            deleteDrinksButton.Text = DeleteModeEnabled ? "Confirm Deletion" : "Delete Drinks";
 
-            if (!DeleteModeEnabled)
+            if (DeleteModeEnabled)
             {
                 // Handle the deletion
                 var drinksToDelete = flowLayoutPanel.Controls.OfType<CustomButton>().Where(b => b.Selected).ToList();
@@ -191,9 +189,15 @@ namespace beursfuif
                     {
                         drinks.Remove(drinkToRemove);
                     }
+                    flowLayoutPanel.Controls.Remove(btn);
+                    btn.Dispose();  // Dispose of the button after removing
                 }
                 RefreshDrinkLayout();
             }
+
+            // Toggle the delete mode after handling deletions (if applicable)
+            DeleteModeEnabled = !DeleteModeEnabled;
+            deleteDrinksButton.Text = DeleteModeEnabled ? "Confirm Deletion" : "Delete Drinks";
         }
 
         private void RefreshDrinkLayout()

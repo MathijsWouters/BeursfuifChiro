@@ -16,7 +16,7 @@ namespace beursfuif
         {
             InitializeComponent();
         }
-        public delegate void DrinkAddedEventHandler(string drinkName);
+        public delegate void DrinkAddedEventHandler(Drink newDrink);
         public class Drink
         {
             public string Name { get; set; }
