@@ -112,9 +112,9 @@ namespace beursfuif
                 string[] textLines = this.Text.Split('\n');
                 if (textLines.Length >= 3)
                 {
-                    Rectangle numberRect = new Rectangle((int)(this.Width * 0.25), this.Height / 4, (int)(this.Width * 0.25), this.Height / 2);
-                    Rectangle nameRect = new Rectangle(this.Width / 5, this.Height / 4, 4 * this.Width / 5, this.Height / 2);
-                    Rectangle priceRect = new Rectangle(0, this.Height - 20, this.Width - 5, 20);
+                    Rectangle numberRect = new Rectangle((int)(this.Width * 0.25), (int)(this.Height / 4), (int)(this.Width * 0.25), (int)(this.Height / 2));
+                    Rectangle nameRect = new Rectangle((int)(this.Width / 5), (int)(this.Height / 4), (int)(4 * this.Width / 5), (int)(this.Height / 2));
+                    Rectangle priceRect = new Rectangle(0, (int)(this.Height - 25), this.Width - (int)(5), (int)(20));
 
                     // Draw slightly less black rectangle for the number
                     using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, 0, 0, 0))) // Adjust transparency as needed
@@ -122,8 +122,8 @@ namespace beursfuif
                         pevent.Graphics.FillRectangle(brush, numberRect);
                     }
 
-                    Font biggerFont = new Font(this.Font.FontFamily, this.Font.Size + 2, FontStyle.Bold);
-                    Font nameFont = new Font(this.Font.FontFamily, this.Font.Size + 4, FontStyle.Bold);
+                    Font biggerFont = new Font(this.Font.FontFamily, (this.Font.Size + 5), FontStyle.Bold);
+                    Font nameFont = new Font(this.Font.FontFamily, (this.Font.Size + 1), FontStyle.Bold);
                     TextRenderer.DrawText(pevent.Graphics, textLines[0], biggerFont, numberRect, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
                     TextRenderer.DrawText(pevent.Graphics, textLines[1], nameFont, nameRect, this.ForeColor, TextFormatFlags.Right | TextFormatFlags.VerticalCenter);
                     TextRenderer.DrawText(pevent.Graphics, textLines[2], this.Font, priceRect, this.ForeColor, TextFormatFlags.Right | TextFormatFlags.Bottom);
@@ -139,14 +139,14 @@ namespace beursfuif
         private CustomButton CreateDrinkButton(Drink drink, int drinkNumber)
         {
             CustomButton drinkButton = new CustomButton();
-            drinkButton.Width = 150;
-            drinkButton.Height = 80;
+            drinkButton.Width = 200;
+            drinkButton.Height = 85;
             drinkButton.LeftColor = drink.Color;  // Assigning the drink's color to LeftColor
             drinkButton.Margin = new Padding(5);
             decimal averagePrice = (drink.MinPrice + drink.MaxPrice) / 2;
             string buttonText = $"{drinkNumber}\n{drink.Name}\n{averagePrice.ToString("F2")} EUR";
             drinkButton.Text = buttonText;
-            drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size, FontStyle.Bold);
+            drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size * 1.5f, FontStyle.Bold);
             return drinkButton;
         }
     }

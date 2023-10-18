@@ -35,6 +35,7 @@
             minimizeButton = new Button();
             maximizeButton = new Button();
             titleLabel = new Label();
+            flowLayoutPanel = new FlowLayoutPanel();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -126,6 +127,14 @@
             titleLabel.Text = "Beursfuif";
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // flowLayoutPanel
+            // 
+            flowLayoutPanel.Location = new Point(0, 56);
+            flowLayoutPanel.Name = "flowLayoutPanel";
+            flowLayoutPanel.Padding = new Padding(10);
+            flowLayoutPanel.Size = new Size(650, 315);
+            flowLayoutPanel.TabIndex = 1;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -133,23 +142,12 @@
             BackColor = SystemColors.Control;
             ClientSize = new Size(1409, 611);
             Controls.Add(titleBarPanel);
+            Controls.Add(flowLayoutPanel);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Load += Form1_Load;
             titleBarPanel.ResumeLayout(false);
             ResumeLayout(false);
-            //
-            //flowlayoutpanel
-            //
-            flowLayoutPanel = new FlowLayoutPanel();
-            flowLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
-            flowLayoutPanel.AutoScroll = false;
-            flowLayoutPanel.Padding = new Padding(10);
-            flowLayoutPanel.Width = 500;
-            flowLayoutPanel.Height = 300; 
-            flowLayoutPanel.Location = new Point(0, titleBarPanel.Bottom + 10); 
-            flowLayoutPanel.WrapContents = true;
-            this.Controls.Add(flowLayoutPanel);
         }
 
         #endregion
