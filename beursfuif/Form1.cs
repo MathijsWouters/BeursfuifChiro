@@ -102,14 +102,32 @@ namespace beursfuif
                     pevent.Graphics.FillRectangle(brush, 0, 0, this.Width / 5, this.Height);
                 }
 
-                // Draw the right color with tint
-                using (SolidBrush brush = new SolidBrush(RightColor))
+                // Draw the background for the remaining 4/5 of the button
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(30, 0, 0, 0))) // Slightly transparent black
                 {
                     pevent.Graphics.FillRectangle(brush, this.Width / 5, 0, 4 * this.Width / 5, this.Height);
                 }
 
-                // Draw the text manually over the top
-                TextRenderer.DrawText(pevent.Graphics, this.Text, this.Font, this.ClientRectangle, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                // Split the text to render different parts separately
+                string[] textLines = this.Text.Split('\n');
+                if (textLines.Length >= 3)
+                {
+                    Rectangle numberRect = new Rectangle((int)(this.Width * 0.25), this.Height / 4, (int)(this.Width * 0.25), this.Height / 2);
+                    Rectangle nameRect = new Rectangle(this.Width / 5, this.Height / 4, 4 * this.Width / 5, this.Height / 2);
+                    Rectangle priceRect = new Rectangle(0, this.Height - 20, this.Width - 5, 20);
+
+                    // Draw slightly less black rectangle for the number
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, 0, 0, 0))) // Adjust transparency as needed
+                    {
+                        pevent.Graphics.FillRectangle(brush, numberRect);
+                    }
+
+                    Font biggerFont = new Font(this.Font.FontFamily, this.Font.Size + 2, FontStyle.Bold);
+                    Font nameFont = new Font(this.Font.FontFamily, this.Font.Size + 4, FontStyle.Bold);
+                    TextRenderer.DrawText(pevent.Graphics, textLines[0], biggerFont, numberRect, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                    TextRenderer.DrawText(pevent.Graphics, textLines[1], nameFont, nameRect, this.ForeColor, TextFormatFlags.Right | TextFormatFlags.VerticalCenter);
+                    TextRenderer.DrawText(pevent.Graphics, textLines[2], this.Font, priceRect, this.ForeColor, TextFormatFlags.Right | TextFormatFlags.Bottom);
+                }
 
                 // Draw the border
                 using (Pen pen = new Pen(Color.White, 3)) // 3 for thicker border
