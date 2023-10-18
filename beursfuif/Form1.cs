@@ -1,7 +1,7 @@
 
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using static beursfuif.AddDrinksForm;
-
 namespace beursfuif
 {
     public partial class Form1 : Form
@@ -13,7 +13,6 @@ namespace beursfuif
         private FlowLayoutPanel flowLayoutPanel;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
-
         public Form1()
         {
             InitializeComponent();
@@ -24,12 +23,8 @@ namespace beursfuif
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             // Set initial position of the addButton
-
             // Label properties
-
             // TextBox properties
-
-
             // Button properties
             // Example of opening the AddDrinksForm
             AddDrinksForm addDrinksForm = new AddDrinksForm();
@@ -91,23 +86,49 @@ namespace beursfuif
             // Set the location for your button, e.g., use the drinkCount to position it in a grid layout
             // For now, just setting a sample location:
             flowLayoutPanel.Controls.Add(drinkButton); // Add the button to Form1
-
-
         }
-        private Button CreateDrinkButton(Drink drink, int drinkNumber)
+        public class CustomButton : Button
         {
-            Button drinkButton = new Button();
-            drinkButton.Width = 150;
-            drinkButton.Height = 80; 
-            drinkButton.BackColor = drink.Color;
-            drinkButton.Margin = new Padding(5);
+            public Color LeftColor { get; set; } = Color.Blue; // Default color
+            public Color RightColor { get; set; } = Color.FromArgb(30, 0, 0, 0); // Black tint
+            protected override void OnPaint(PaintEventArgs pevent)
+            {
+                // Clear everything to draw manually
+                pevent.Graphics.Clear(this.BackColor);
 
+                // Draw the left color
+                using (SolidBrush brush = new SolidBrush(LeftColor))
+                {
+                    pevent.Graphics.FillRectangle(brush, 0, 0, this.Width / 5, this.Height);
+                }
+
+                // Draw the right color with tint
+                using (SolidBrush brush = new SolidBrush(RightColor))
+                {
+                    pevent.Graphics.FillRectangle(brush, this.Width / 5, 0, 4 * this.Width / 5, this.Height);
+                }
+
+                // Draw the text manually over the top
+                TextRenderer.DrawText(pevent.Graphics, this.Text, this.Font, this.ClientRectangle, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+                // Draw the border
+                using (Pen pen = new Pen(Color.White, 3)) // 3 for thicker border
+                {
+                    pevent.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
+                }
+            }
+        }
+        private CustomButton CreateDrinkButton(Drink drink, int drinkNumber)
+        {
+            CustomButton drinkButton = new CustomButton();
+            drinkButton.Width = 150;
+            drinkButton.Height = 80;
+            drinkButton.LeftColor = drink.Color;  // Assigning the drink's color to LeftColor
+            drinkButton.Margin = new Padding(5);
             decimal averagePrice = (drink.MinPrice + drink.MaxPrice) / 2;
             string buttonText = $"{drinkNumber}\n{drink.Name}\n{averagePrice.ToString("F2")} EUR";
-
             drinkButton.Text = buttonText;
             drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size, FontStyle.Bold);
-
             return drinkButton;
         }
     }
