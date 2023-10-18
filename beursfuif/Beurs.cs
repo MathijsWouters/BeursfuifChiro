@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace beursfuif
 {
-    public partial class Form2 : Form
+    public partial class Beurs : Form
     {
-        public Form2()
+        public Beurs()
         {
             InitializeComponent();
             this.Text = "Secondary Window";

@@ -46,7 +46,6 @@ C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-win
 C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.pdb
 C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.genruntimeconfig.cache
 C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\ref\beursfuif.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.Form2.resources
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\beursfuif.exe
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\beursfuif.deps.json
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\beursfuif.runtimeconfig.json
@@ -66,3 +65,4 @@ C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\o
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\ref\beursfuif.dll
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.AddDrinksForm.resources
 C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.AddDrinksForm.resources
+C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.Beurs.resources

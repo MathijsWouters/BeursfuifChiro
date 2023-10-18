@@ -30,7 +30,7 @@
         {
             titleBarPanel = new Panel();
             addDrinksButton = new Button();
-            openForm2Button = new Button();
+            openBeursButton = new Button();
             closeButton = new Button();
             minimizeButton = new Button();
             maximizeButton = new Button();
@@ -45,7 +45,7 @@
             titleBarPanel.BackColor = Color.FromArgb(35, 35, 38);
             titleBarPanel.Controls.Add(deleteDrinksButton);
             titleBarPanel.Controls.Add(addDrinksButton);
-            titleBarPanel.Controls.Add(openForm2Button);
+            titleBarPanel.Controls.Add(openBeursButton);
             titleBarPanel.Controls.Add(closeButton);
             titleBarPanel.Controls.Add(minimizeButton);
             titleBarPanel.Controls.Add(maximizeButton);
@@ -69,15 +69,15 @@
             addDrinksButton.Text = "Add drinks";
             addDrinksButton.Click += AddDrinksButton_Click;
             // 
-            // openForm2Button
+            // openBeursButton
             // 
-            openForm2Button.ForeColor = Color.White;
-            openForm2Button.Location = new Point(3, 3);
-            openForm2Button.Name = "openForm2Button";
-            openForm2Button.Size = new Size(84, 21);
-            openForm2Button.TabIndex = 0;
-            openForm2Button.Text = "Beurs";
-            openForm2Button.Click += OpenForm2Button_Click;
+            openBeursButton.ForeColor = Color.White;
+            openBeursButton.Location = new Point(3, 3);
+            openBeursButton.Name = "openBeursButton";
+            openBeursButton.Size = new Size(84, 21);
+            openBeursButton.TabIndex = 0;
+            openBeursButton.Text = "Beurs";
+            openBeursButton.Click += OpenBeursButton_Click;
             // 
             // closeButton
             // 
@@ -168,7 +168,7 @@
         private Button minimizeButton;
         private Button maximizeButton;
         private Label titleLabel;
-        private Button openForm2Button;
+        private Button openBeursButton;
         private Button addDrinksButton;
         private Button deleteDrinksButton;
     }

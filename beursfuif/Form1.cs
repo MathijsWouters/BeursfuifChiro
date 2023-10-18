@@ -27,9 +27,6 @@ namespace beursfuif
             // TextBox properties
             // Button properties
             // Example of opening the AddDrinksForm
-            AddDrinksForm addDrinksForm = new AddDrinksForm();
-            addDrinksForm.DrinkAdded += OnDrinkAdded;
-            addDrinksForm.Show();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -68,10 +65,10 @@ namespace beursfuif
             else
                 this.WindowState = FormWindowState.Normal;
         }
-        private void OpenForm2Button_Click(object sender, EventArgs e)
+        private void OpenBeursButton_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.Show();
+            Beurs Beurs = new Beurs();
+            Beurs.Show();
         }
         private void AddDrinksButton_Click(object sender, EventArgs e)
         {
