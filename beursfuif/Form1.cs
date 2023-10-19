@@ -24,6 +24,8 @@ namespace beursfuif
             this.ForeColor = Color.White;
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
+            this.KeyPreview = true;
+            this.KeyDown += Form1_KeyDown;
             // Set initial position of the addButton
             // Label properties
             // TextBox properties
@@ -283,9 +285,7 @@ namespace beursfuif
                     break;
                 case Keys.NumPad9:
                     numberPressed = 9;
-                    break;
-
-                    
+                    break;   
             }
 
             if (numberPressed != -1)
@@ -298,7 +298,6 @@ namespace beursfuif
                 }
             }
         }
-
         private CustomButton FindButtonWithNumber(int number)
         {
             // Iterate over all CustomButtons in the flowLayoutPanel and find the one with the correct number

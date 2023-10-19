@@ -24,9 +24,14 @@ namespace beursfuif
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
             plotModel = new PlotModel { Title = "Beurs Live Chart" };
-            
+
 
             Beursgraph.Model = plotModel;
+        }
+
+        private void plotView1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
