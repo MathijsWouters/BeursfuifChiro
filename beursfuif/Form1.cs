@@ -1,6 +1,8 @@
 
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using System.IO;
 using static beursfuif.AddDrinksForm;
 namespace beursfuif
 {
@@ -30,6 +32,23 @@ namespace beursfuif
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            try
+            {
+                if (File.Exists("drinksData.json"))
+                {
+                    string json = File.ReadAllText("drinksData.json");
+                    drinks = JsonConvert.DeserializeObject<List<Drink>>(json);
+                    for (int i = 0; i < drinks.Count; i++)
+                    {
+                        Button drinkButton = CreateDrinkButton(drinks[i], i + 1);
+                        flowLayoutPanel.Controls.Add(drinkButton);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
         }
         private void titleBarPanel_MouseDown(object sender, MouseEventArgs e)
         {
@@ -81,12 +100,14 @@ namespace beursfuif
             Button drinkButton = CreateDrinkButton(newDrink, drinks.Count + 1);
             flowLayoutPanel.Controls.Add(drinkButton);
             drinks.Add(newDrink);
+            SaveDrinksToFile();
             RefreshDrinkLayout();
         }
         public class CustomButton : Button
         {
             public bool Selected { get; set; } = false;
             public bool DeleteModeEnabled { get; set; } = false;
+            public Drink AssociatedDrink { get; set; }
 
 
             protected override void OnClick(EventArgs e)
@@ -156,7 +177,9 @@ namespace beursfuif
             string buttonText = $"{drinkNumber}\n{drink.Name}\n{averagePrice.ToString("F2")} EUR";
             drinkButton.Text = buttonText;
             drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size * 1.5f, FontStyle.Bold);
+            drinkButton.AssociatedDrink = drink;
             drinkButton.Click += (s, e) =>
+            
             {
                 if (DeleteModeEnabled)
                 {
@@ -181,15 +204,15 @@ namespace beursfuif
                 var drinksToDelete = flowLayoutPanel.Controls.OfType<CustomButton>().Where(b => b.Selected).ToList();
                 foreach (var btn in drinksToDelete)
                 {
-                    var drinkToRemove = drinks.FirstOrDefault(d => $"{d.Name}\n{((d.MinPrice + d.MaxPrice) / 2).ToString("F2")} EUR" == btn.Text.Split('\n')[1]);
-                    if (drinkToRemove != null)
+                    if (btn.AssociatedDrink != null)
                     {
-                        drinks.Remove(drinkToRemove);
+                        drinks.Remove(btn.AssociatedDrink);
                     }
                     flowLayoutPanel.Controls.Remove(btn);
                     btn.Dispose();  // Dispose of the button after removing
                 }
                 RefreshDrinkLayout();
+                SaveDrinksToFile();
             }
 
             // Toggle the delete mode after handling deletions (if applicable)
@@ -205,6 +228,18 @@ namespace beursfuif
                 string[] lines = control.Text.Split('\n');
                 control.Text = $"{counter}\n{lines[1]}\n{lines[2]}";
                 counter++;
+            }
+        }
+        private void SaveDrinksToFile()
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(drinks);
+                File.WriteAllText("drinksData.json", json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving: {ex.Message}");
             }
         }
     }

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "jLwQeYfM+vszMyFgLAwYU3pjlwW8n5dfTHk5wStdu23fWeQw20bIOccaFlJV3ZOAb0gdFyRMn28rQcI+Ca/2ZQ==",
+  "dgSpecHash": "Bn3OKTc58N7JcR9f4Z3/Kk7vGT8LvMqDp7jLEhrkDUmdfjgaGD7Z0G/fdg4FsYVjtYOAiT4bfk3AHWaA8Ps7jw==",
   "success": true,
   "projectFilePath": "C:\\Users\\mathi\\OneDrive\\Documenten\\A1 chiro beursfuif\\BeursfuifChiro\\beursfuif\\beursfuif.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\mathi\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

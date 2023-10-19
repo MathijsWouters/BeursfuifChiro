@@ -66,3 +66,6 @@ C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\o
 C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.AddDrinksForm.resources
 C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.Beurs.resources
 C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.Beurs.resources
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.csproj.AssemblyReference.cache
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Debug\net6.0-windows\beursfuif.csproj.CopyComplete
