@@ -157,6 +157,8 @@
             // reciptDrinkListBox
             // 
             reciptDrinkListBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            reciptDrinkListBox.BackColor = Color.FromArgb(45, 45, 48);
+            reciptDrinkListBox.ForeColor = Color.White;
             reciptDrinkListBox.ItemHeight = 15;
             reciptDrinkListBox.Location = new Point(0, 0);
             reciptDrinkListBox.Name = "reciptDrinkListBox";
@@ -186,11 +188,10 @@
             // lblTimer
             // 
             lblTimer.AutoSize = true;
-            lblTimer.Location = new Point(1066, 148);
+            lblTimer.Location = new Point(0, 0);
             lblTimer.Name = "lblTimer";
-            lblTimer.Size = new Size(38, 15);
+            lblTimer.Size = new Size(0, 15);
             lblTimer.TabIndex = 7;
-            lblTimer.Text = "Time remaining: 10 seconds";
             // 
             // Form1
             // 

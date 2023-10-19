@@ -59,9 +59,10 @@ namespace beursfuif
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
-            timer1.Interval = 1000;  
+            timer1.Interval = 1000;
             timer1.Tick += Timer1_Tick;
             PositionLabels();
+            PositionTimerLabel();
         }
         private void titleBarPanel_MouseDown(object sender, MouseEventArgs e)
         {
@@ -340,11 +341,10 @@ namespace beursfuif
         {
             AdjustListBoxPosition();
         }
-
         private void AdjustListBoxPosition()
         {
             int marginRight = 20; // Margin from the top and right edges
-            int marginTop = 45;
+            int marginTop = 65;
             reciptDrinkListBox.Location = new Point(this.ClientSize.Width - reciptDrinkListBox.Width - marginRight, marginTop);
             int padding = 10;
             int lblTotalY = reciptDrinkListBox.Top + reciptDrinkListBox.Height + padding;
@@ -355,7 +355,7 @@ namespace beursfuif
         {
             reciptDrinkListBox.Items.Clear();  // Clear current items
             decimal totalOrder = 0m;
-            countdown = 10; 
+            countdown = 10;
             UpdateTimerLabel();
             timer1.Start();
 
@@ -397,12 +397,10 @@ namespace beursfuif
                 UpdateTimerLabel();
             }
         }
-
         private void UpdateTimerLabel()
         {
             lblTimer.Text = $"Time remaining: {countdown} seconds";
         }
-
         private void ClearDrinks()
         {
             reciptDrinkListBox.Items.Clear();
@@ -410,8 +408,6 @@ namespace beursfuif
             countdown = 10;
             UpdateTimerLabel();
         }
-
-
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Enter)
@@ -420,6 +416,16 @@ namespace beursfuif
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+        private void PositionTimerLabel()
+        {
+
+            lblTimer.AutoSize = true;
+            lblTimer.Text = "Time remaining: 10 seconds";
+            Font currentFont = lblTimer.Font;
+            lblTimer.Font = new Font(currentFont.FontFamily, currentFont.Size + 2, FontStyle.Bold);
+            lblTimer.Left = reciptDrinkListBox.Left + (reciptDrinkListBox.Width - lblTimer.Width) / 2;
+            lblTimer.Top = reciptDrinkListBox.Top - lblTimer.Height - 10;
         }
     }
 }
