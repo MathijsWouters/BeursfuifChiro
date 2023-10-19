@@ -127,23 +127,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mathi\\.nuget\\packages\\": {},
+    "C:\\Users\\Gebruiker\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\OneDrive\\Documenten\\A1 chiro beursfuif\\BeursfuifChiro\\beursfuif\\beursfuif.csproj",
+      "projectUniqueName": "C:\\Users\\Gebruiker\\Documents\\chiro\\BeursfuifChiro\\beursfuif\\beursfuif.csproj",
       "projectName": "beursfuif",
-      "projectPath": "C:\\Users\\mathi\\OneDrive\\Documenten\\A1 chiro beursfuif\\BeursfuifChiro\\beursfuif\\beursfuif.csproj",
-      "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\OneDrive\\Documenten\\A1 chiro beursfuif\\BeursfuifChiro\\beursfuif\\obj\\",
+      "projectPath": "C:\\Users\\Gebruiker\\Documents\\chiro\\BeursfuifChiro\\beursfuif\\beursfuif.csproj",
+      "packagesPath": "C:\\Users\\Gebruiker\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Gebruiker\\Documents\\chiro\\BeursfuifChiro\\beursfuif\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Gebruiker\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
