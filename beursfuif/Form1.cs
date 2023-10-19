@@ -181,11 +181,18 @@ namespace beursfuif
             drinkButton.Click += (s, e) =>
             
             {
+                var btn = s as CustomButton;
+
+                if (btn == null) // Just to be safe
+                    return;
                 if (DeleteModeEnabled)
                 {
-                    var btn = s as CustomButton;
                     btn.Selected = !btn.Selected;
                     btn.BackColor = btn.Selected ? Color.Red : Color.FromArgb(45, 45, 48);
+                }
+                else
+                {
+                    MessageBox.Show($"You clicked on {btn.AssociatedDrink.Name}");
                 }
             };
             return drinkButton;
@@ -241,6 +248,74 @@ namespace beursfuif
             {
                 MessageBox.Show($"An error occurred while saving: {ex.Message}");
             }
+        }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            int numberPressed = -1;
+            switch (e.KeyCode)
+            {
+                case Keys.NumPad0:
+                    numberPressed = 0;
+                    break;
+                case Keys.NumPad1:
+                    numberPressed = 1;
+                    break;
+                case Keys.NumPad2:
+                    numberPressed = 2;
+                    break;
+                case Keys.NumPad3:
+                    numberPressed = 3;
+                    break;
+                case Keys.NumPad4:
+                    numberPressed = 4;
+                    break;
+                case Keys.NumPad5:
+                    numberPressed = 5;
+                    break;
+                case Keys.NumPad6:
+                    numberPressed = 6;
+                    break;
+                case Keys.NumPad7:
+                    numberPressed = 7;
+                    break;
+                case Keys.NumPad8:
+                    numberPressed = 8;
+                    break;
+                case Keys.NumPad9:
+                    numberPressed = 9;
+                    break;
+
+                    
+            }
+
+            if (numberPressed != -1)
+            {
+               
+                Button correspondingButton = FindButtonWithNumber(numberPressed);
+                if (correspondingButton != null)
+                {
+                    correspondingButton.PerformClick();
+                }
+            }
+        }
+
+        private CustomButton FindButtonWithNumber(int number)
+        {
+            // Iterate over all CustomButtons in the flowLayoutPanel and find the one with the correct number
+            foreach (Control ctrl in flowLayoutPanel.Controls)
+            {
+                if (ctrl is CustomButton)
+                {
+                    CustomButton btn = (CustomButton)ctrl;
+                    // Get the first line of the button's text, which contains the drinkNumber
+                    string firstLine = btn.Text.Split('\n').FirstOrDefault();
+                    if (int.TryParse(firstLine, out int parsedNumber) && parsedNumber == number)
+                    {
+                        return btn;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

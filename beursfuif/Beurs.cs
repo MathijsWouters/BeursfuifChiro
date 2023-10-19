@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OxyPlot;
+using OxyPlot.Series;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +15,7 @@ namespace beursfuif
 {
     public partial class Beurs : Form
     {
+        private PlotModel plotModel;
         public Beurs()
         {
             InitializeComponent();
@@ -20,6 +23,10 @@ namespace beursfuif
             this.BackColor = Color.Black;
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
+            plotModel = new PlotModel { Title = "Beurs Live Chart" };
+            
+
+            Beursgraph.Model = plotModel;
         }
     }
 }
