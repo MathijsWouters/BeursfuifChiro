@@ -29,13 +29,27 @@
         private void InitializeComponent()
         {
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            Beursgraph = new OxyPlot.WindowsForms.PlotView();
             SuspendLayout();
+            // 
+            // Beursgraph
+            // 
+            Beursgraph.Location = new Point(12, 12);
+            Beursgraph.Name = "Beursgraph";
+            Beursgraph.PanCursor = Cursors.Hand;
+            Beursgraph.Size = new Size(776, 426);
+            Beursgraph.TabIndex = 0;
+            Beursgraph.Text = "Beursgraph";
+            Beursgraph.ZoomHorizontalCursor = Cursors.SizeWE;
+            Beursgraph.ZoomRectangleCursor = Cursors.SizeNWSE;
+            Beursgraph.ZoomVerticalCursor = Cursors.SizeNS;
             // 
             // Beurs
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(Beursgraph);
             Name = "Beurs";
             Text = "Beurs";
             ResumeLayout(false);
@@ -44,5 +58,6 @@
         #endregion
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private OxyPlot.WindowsForms.PlotView Beursgraph;
     }
 }

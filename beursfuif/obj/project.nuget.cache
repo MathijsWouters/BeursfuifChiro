@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Bn3OKTc58N7JcR9f4Z3/Kk7vGT8LvMqDp7jLEhrkDUmdfjgaGD7Z0G/fdg4FsYVjtYOAiT4bfk3AHWaA8Ps7jw==",
+  "dgSpecHash": "3wLoA59NQffxZdgY8ZfNzeQZLPIuTO80qFcJTau+O+0m1ss8BdIXetnd+//nM/AffmEv6AzUV/E9jMK3fp+Evg==",
   "success": true,
   "projectFilePath": "C:\\Users\\mathi\\OneDrive\\Documenten\\A1 chiro beursfuif\\BeursfuifChiro\\beursfuif\\beursfuif.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\mathi\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\mathi\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\mathi\\.nuget\\packages\\oxyplot.core\\2.1.2\\oxyplot.core.2.1.2.nupkg.sha512",
+    "C:\\Users\\mathi\\.nuget\\packages\\oxyplot.windowsforms\\2.1.2\\oxyplot.windowsforms.2.1.2.nupkg.sha512"
   ],
   "logs": []
 }
