@@ -123,7 +123,7 @@ namespace beursfuif
                 {
                     Rectangle numberRect = new Rectangle((int)(this.Width * 0.25), (int)(this.Height / 4), (int)(this.Width * 0.25), (int)(this.Height / 2));
                     Rectangle nameRect = new Rectangle((int)(this.Width / 5), (int)(this.Height / 4), (int)(4 * this.Width / 5), (int)(this.Height / 2));
-                    Rectangle priceRect = new Rectangle(0, (int)(this.Height - 25), this.Width - (int)(5), (int)(20));
+                    Rectangle priceRect = new Rectangle(0, (int)(this.Height - 30), this.Width - 5, 25);
 
                     // Draw slightly less black rectangle for the number
                     using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, 0, 0, 0))) // Adjust transparency as needed
@@ -148,8 +148,8 @@ namespace beursfuif
         private CustomButton CreateDrinkButton(Drink drink, int drinkNumber)
         {
             CustomButton drinkButton = new CustomButton();
-            drinkButton.Width = 200;
-            drinkButton.Height = 85;
+            drinkButton.Width = 250;
+            drinkButton.Height = 95;
             drinkButton.LeftColor = drink.Color;  // Assigning the drink's color to LeftColor
             drinkButton.Margin = new Padding(5);
             decimal averagePrice = (drink.MinPrice + drink.MaxPrice) / 2;

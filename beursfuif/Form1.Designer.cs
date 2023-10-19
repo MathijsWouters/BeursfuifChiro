@@ -134,7 +134,7 @@
             flowLayoutPanel.Location = new Point(0, 56);
             flowLayoutPanel.Name = "flowLayoutPanel";
             flowLayoutPanel.Padding = new Padding(10);
-            flowLayoutPanel.Size = new Size(650, 315);
+            flowLayoutPanel.Size = new Size(800, 345);
             flowLayoutPanel.TabIndex = 1;
             // 
             // deleteDrinksButton
