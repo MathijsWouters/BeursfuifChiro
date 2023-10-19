@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace beursfuif
 {
     public partial class Beurs : Form
@@ -16,8 +17,8 @@ namespace beursfuif
         {
             InitializeComponent();
             this.Text = "Secondary Window";
-            this.BackColor = Color.Black; 
-            this.FormBorderStyle = FormBorderStyle.None; 
+            this.BackColor = Color.Black;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
         }
     }
