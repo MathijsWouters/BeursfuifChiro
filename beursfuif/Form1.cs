@@ -9,6 +9,7 @@ namespace beursfuif
     public partial class Form1 : Form
     {
         private bool mouseDown;
+        private int countdown = 10;
         private Point lastLocation;
         private ListBox reciptDrinkListBox;
         private FlowLayoutPanel flowLayoutPanel;
@@ -58,6 +59,8 @@ namespace beursfuif
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+            timer1.Interval = 1000;  
+            timer1.Tick += Timer1_Tick;
             PositionLabels();
         }
         private void titleBarPanel_MouseDown(object sender, MouseEventArgs e)
@@ -352,6 +355,9 @@ namespace beursfuif
         {
             reciptDrinkListBox.Items.Clear();  // Clear current items
             decimal totalOrder = 0m;
+            countdown = 10; 
+            UpdateTimerLabel();
+            timer1.Start();
 
             foreach (var order in orderedDrinks)
             {
@@ -365,7 +371,7 @@ namespace beursfuif
 
             lblTotal.Text = $"Total: {totalOrder.ToString("F2")}€";
 
-            
+
             int vakjes = (int)(totalOrder / 0.25m);
             lblVakjes.Text = $"Vakjes: {vakjes.ToString("F2")}";
         }
@@ -374,9 +380,46 @@ namespace beursfuif
             int padding = 10;
             int lblTotalY = reciptDrinkListBox.Top + reciptDrinkListBox.Height + padding;
             int lblVakjesY = lblTotalY + lblTotal.Height + padding;
-            int lblX = reciptDrinkListBox.Left; 
+            int lblX = reciptDrinkListBox.Left;
             lblTotal.Location = new Point(lblX, lblTotalY);
             lblVakjes.Location = new Point(lblX, lblVakjesY);
+        }
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            countdown--;
+
+            if (countdown <= 0)
+            {
+                ClearDrinks();
+            }
+            else
+            {
+                UpdateTimerLabel();
+            }
+        }
+
+        private void UpdateTimerLabel()
+        {
+            lblTimer.Text = $"Time remaining: {countdown} seconds";
+        }
+
+        private void ClearDrinks()
+        {
+            reciptDrinkListBox.Items.Clear();
+            timer1.Stop();
+            countdown = 10;
+            UpdateTimerLabel();
+        }
+
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                ClearDrinks();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

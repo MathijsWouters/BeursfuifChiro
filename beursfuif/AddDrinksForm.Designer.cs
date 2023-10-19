@@ -35,7 +35,7 @@
             Interval = new NumericUpDown();
             SaveButton = new Button();
             colorDialog1 = new ColorDialog();
-            label1 = new Label();
+            lblTimer = new Label();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -108,15 +108,15 @@
             SaveButton.UseVisualStyleBackColor = true;
             SaveButton.Click += SaveButton_Click;
             // 
-            // label1
+            // lblTimer
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Location = new Point(403, 35);
-            label1.Name = "label1";
-            label1.Size = new Size(60, 20);
-            label1.TabIndex = 6;
-            label1.Text = "Drankje";
+            lblTimer.AutoSize = true;
+            lblTimer.BackColor = Color.Transparent;
+            lblTimer.Location = new Point(403, 35);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Size = new Size(60, 20);
+            lblTimer.TabIndex = 6;
+            lblTimer.Text = "Drankje";
             
             // 
             // label2
@@ -159,7 +159,7 @@
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(lblTimer);
             Controls.Add(SaveButton);
             Controls.Add(Interval);
             Controls.Add(Max);
@@ -185,7 +185,7 @@
         private NumericUpDown Interval;
         private Button SaveButton;
         private ColorDialog colorDialog1;
-        private Label label1;
+        private Label lblTimer;
         private Label label2;
         private Label label3;
         private Label label4;

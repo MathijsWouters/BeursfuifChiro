@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             titleBarPanel = new Panel();
             deleteDrinksButton = new Button();
             addDrinksButton = new Button();
@@ -38,8 +39,11 @@
             titleLabel = new Label();
             flowLayoutPanel = new FlowLayoutPanel();
             reciptDrinkListBox = new ListBox();
-            this.lblTotal = new System.Windows.Forms.Label();
-            this.lblVakjes = new System.Windows.Forms.Label();
+            lblTotal = new Label();
+            lblVakjes = new Label();
+            timer1 = new System.Windows.Forms.Timer(components);
+            timer2 = new System.Windows.Forms.Timer(components);
+            lblTimer = new Label();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -154,29 +158,39 @@
             // 
             reciptDrinkListBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             reciptDrinkListBox.ItemHeight = 15;
+            reciptDrinkListBox.Location = new Point(0, 0);
             reciptDrinkListBox.Name = "reciptDrinkListBox";
-            reciptDrinkListBox.Size = new Size(300, 200);
+            reciptDrinkListBox.Size = new Size(300, 199);
             reciptDrinkListBox.TabIndex = 0;
             // 
             // lblTotal
             // 
-            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(300, 30); // Adjust width as needed
-            this.lblTotal.TabIndex = 5;  // Adjust tabIndex if needed
-            this.lblTotal.Text = "Total: €0.00";
-            this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblTotal.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTotal.Location = new Point(0, 0);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Size = new Size(300, 30);
+            lblTotal.TabIndex = 5;
+            lblTotal.Text = "Total: €0.00";
+            lblTotal.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblVakjes
             // 
-            this.lblVakjes.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVakjes.Name = "lblVakjes";
-            this.lblVakjes.Size = new System.Drawing.Size(300, 30); // Adjust width as needed
-            this.lblVakjes.TabIndex = 6;  // Adjust tabIndex if needed
-            this.lblVakjes.Text = "Vakjes: 0";
-            this.lblVakjes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Controls.Add(this.lblTotal);
-            this.Controls.Add(this.lblVakjes);
+            lblVakjes.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold, GraphicsUnit.Point);
+            lblVakjes.Location = new Point(0, 0);
+            lblVakjes.Name = "lblVakjes";
+            lblVakjes.Size = new Size(300, 30);
+            lblVakjes.TabIndex = 6;
+            lblVakjes.Text = "Vakjes: 0";
+            lblVakjes.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblTimer
+            // 
+            lblTimer.AutoSize = true;
+            lblTimer.Location = new Point(1066, 148);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Size = new Size(38, 15);
+            lblTimer.TabIndex = 7;
+            lblTimer.Text = "Time remaining: 10 seconds";
             // 
             // Form1
             // 
@@ -184,6 +198,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1689, 634);
+            Controls.Add(lblTimer);
+            Controls.Add(lblTotal);
+            Controls.Add(lblVakjes);
             Controls.Add(reciptDrinkListBox);
             Controls.Add(titleBarPanel);
             Controls.Add(flowLayoutPanel);
@@ -192,6 +209,7 @@
             Load += Form1_Load;
             titleBarPanel.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
         #endregion
 
@@ -203,7 +221,10 @@
         private Button openBeursButton;
         private Button addDrinksButton;
         private Button deleteDrinksButton;
-        private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.Label lblVakjes;
+        private Label lblTotal;
+        private Label lblVakjes;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
+        private Label lblTimer;
     }
 }
