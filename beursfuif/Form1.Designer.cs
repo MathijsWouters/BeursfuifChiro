@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             titleBarPanel = new Panel();
+            deleteDrinksButton = new Button();
             addDrinksButton = new Button();
             openBeursButton = new Button();
             closeButton = new Button();
@@ -36,7 +37,9 @@
             maximizeButton = new Button();
             titleLabel = new Label();
             flowLayoutPanel = new FlowLayoutPanel();
-            deleteDrinksButton = new Button();
+            reciptDrinkListBox = new ListBox();
+            this.lblTotal = new System.Windows.Forms.Label();
+            this.lblVakjes = new System.Windows.Forms.Label();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -53,11 +56,21 @@
             titleBarPanel.Dock = DockStyle.Top;
             titleBarPanel.Location = new Point(0, 0);
             titleBarPanel.Name = "titleBarPanel";
-            titleBarPanel.Size = new Size(1409, 30);
+            titleBarPanel.Size = new Size(1689, 30);
             titleBarPanel.TabIndex = 0;
             titleBarPanel.MouseDown += titleBarPanel_MouseDown;
             titleBarPanel.MouseMove += titleBarPanel_MouseMove;
             titleBarPanel.MouseUp += titleBarPanel_MouseUp;
+            // 
+            // deleteDrinksButton
+            // 
+            deleteDrinksButton.ForeColor = Color.White;
+            deleteDrinksButton.Location = new Point(182, 3);
+            deleteDrinksButton.Name = "deleteDrinksButton";
+            deleteDrinksButton.Size = new Size(84, 21);
+            deleteDrinksButton.TabIndex = 5;
+            deleteDrinksButton.Text = "Delete drinks";
+            deleteDrinksButton.Click += deleteDrinksButton_Click;
             // 
             // addDrinksButton
             // 
@@ -85,7 +98,7 @@
             closeButton.FlatAppearance.BorderSize = 0;
             closeButton.FlatStyle = FlatStyle.Flat;
             closeButton.ForeColor = SystemColors.Control;
-            closeButton.Location = new Point(1184, 0);
+            closeButton.Location = new Point(1464, 0);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(75, 30);
             closeButton.TabIndex = 0;
@@ -98,7 +111,7 @@
             minimizeButton.FlatAppearance.BorderSize = 0;
             minimizeButton.FlatStyle = FlatStyle.Flat;
             minimizeButton.ForeColor = SystemColors.Control;
-            minimizeButton.Location = new Point(1259, 0);
+            minimizeButton.Location = new Point(1539, 0);
             minimizeButton.Name = "minimizeButton";
             minimizeButton.Size = new Size(75, 30);
             minimizeButton.TabIndex = 1;
@@ -111,7 +124,7 @@
             maximizeButton.FlatAppearance.BorderSize = 0;
             maximizeButton.FlatStyle = FlatStyle.Flat;
             maximizeButton.ForeColor = SystemColors.Control;
-            maximizeButton.Location = new Point(1334, 0);
+            maximizeButton.Location = new Point(1614, 0);
             maximizeButton.Name = "maximizeButton";
             maximizeButton.Size = new Size(75, 30);
             maximizeButton.TabIndex = 2;
@@ -124,7 +137,7 @@
             titleLabel.ForeColor = Color.White;
             titleLabel.Location = new Point(0, 0);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(1409, 30);
+            titleLabel.Size = new Size(1689, 30);
             titleLabel.TabIndex = 3;
             titleLabel.Text = "Beursfuif";
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -137,22 +150,41 @@
             flowLayoutPanel.Size = new Size(800, 345);
             flowLayoutPanel.TabIndex = 1;
             // 
-            // deleteDrinksButton
+            // reciptDrinkListBox
             // 
-            deleteDrinksButton.ForeColor = Color.White;
-            deleteDrinksButton.Location = new Point(182, 3);
-            deleteDrinksButton.Name = "deleteDrinksButton";
-            deleteDrinksButton.Size = new Size(84, 21);
-            deleteDrinksButton.TabIndex = 5;
-            deleteDrinksButton.Text = "Delete drinks";
-            deleteDrinksButton.Click += deleteDrinksButton_Click;
+            reciptDrinkListBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            reciptDrinkListBox.ItemHeight = 15;
+            reciptDrinkListBox.Name = "reciptDrinkListBox";
+            reciptDrinkListBox.Size = new Size(300, 200);
+            reciptDrinkListBox.TabIndex = 0;
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(300, 30); // Adjust width as needed
+            this.lblTotal.TabIndex = 5;  // Adjust tabIndex if needed
+            this.lblTotal.Text = "Total: €0.00";
+            this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblVakjes
+            // 
+            this.lblVakjes.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVakjes.Name = "lblVakjes";
+            this.lblVakjes.Size = new System.Drawing.Size(300, 30); // Adjust width as needed
+            this.lblVakjes.TabIndex = 6;  // Adjust tabIndex if needed
+            this.lblVakjes.Text = "Vakjes: 0";
+            this.lblVakjes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.lblVakjes);
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1409, 611);
+            ClientSize = new Size(1689, 634);
+            Controls.Add(reciptDrinkListBox);
             Controls.Add(titleBarPanel);
             Controls.Add(flowLayoutPanel);
             Margin = new Padding(3, 2, 3, 2);
@@ -171,5 +203,7 @@
         private Button openBeursButton;
         private Button addDrinksButton;
         private Button deleteDrinksButton;
+        private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Label lblVakjes;
     }
 }

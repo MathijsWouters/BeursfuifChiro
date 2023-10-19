@@ -10,9 +10,11 @@ namespace beursfuif
     {
         private bool mouseDown;
         private Point lastLocation;
+        private ListBox reciptDrinkListBox;
         private FlowLayoutPanel flowLayoutPanel;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
+        private Dictionary<Drink, int> orderedDrinks = new Dictionary<Drink, int>();
         public bool DeleteModeEnabled { get; set; } = false;
         public event DrinkAddedEventHandler DrinkAdded;
         public Form1()
@@ -26,6 +28,11 @@ namespace beursfuif
             this.FormBorderStyle = FormBorderStyle.None;
             this.KeyPreview = true;
             this.KeyDown += Form1_KeyDown;
+            this.Resize += Form1_Resize;
+            reciptDrinkListBox.Font = new Font(reciptDrinkListBox.Font.FontFamily, reciptDrinkListBox.Font.Size + 3, FontStyle.Bold);
+
+            lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
+            lblVakjes.Font = new Font(lblVakjes.Font.FontFamily, lblVakjes.Font.Size + 4, FontStyle.Bold);
             // Set initial position of the addButton
             // Label properties
             // TextBox properties
@@ -51,6 +58,7 @@ namespace beursfuif
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+            PositionLabels();
         }
         private void titleBarPanel_MouseDown(object sender, MouseEventArgs e)
         {
@@ -181,7 +189,7 @@ namespace beursfuif
             drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size * 1.5f, FontStyle.Bold);
             drinkButton.AssociatedDrink = drink;
             drinkButton.Click += (s, e) =>
-            
+
             {
                 var btn = s as CustomButton;
 
@@ -194,7 +202,16 @@ namespace beursfuif
                 }
                 else
                 {
-                    MessageBox.Show($"You clicked on {btn.AssociatedDrink.Name}");
+                    if (orderedDrinks.ContainsKey(btn.AssociatedDrink))
+                    {
+                        orderedDrinks[btn.AssociatedDrink]++;
+                    }
+                    else
+                    {
+                        orderedDrinks[btn.AssociatedDrink] = 1;
+                    }
+
+                    RefreshOrderList();
                 }
             };
             return drinkButton;
@@ -285,12 +302,12 @@ namespace beursfuif
                     break;
                 case Keys.NumPad9:
                     numberPressed = 9;
-                    break;   
+                    break;
             }
 
             if (numberPressed != -1)
             {
-               
+
                 Button correspondingButton = FindButtonWithNumber(numberPressed);
                 if (correspondingButton != null)
                 {
@@ -315,6 +332,51 @@ namespace beursfuif
                 }
             }
             return null;
+        }
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            AdjustListBoxPosition();
+        }
+
+        private void AdjustListBoxPosition()
+        {
+            int marginRight = 20; // Margin from the top and right edges
+            int marginTop = 45;
+            reciptDrinkListBox.Location = new Point(this.ClientSize.Width - reciptDrinkListBox.Width - marginRight, marginTop);
+            int padding = 10;
+            int lblTotalY = reciptDrinkListBox.Top + reciptDrinkListBox.Height + padding;
+            int lblX = this.ClientSize.Width - this.lblTotal.Width - 20;
+            int lblVakjesY = lblTotalY + this.lblTotal.Height + padding;
+        }
+        private void RefreshOrderList()
+        {
+            reciptDrinkListBox.Items.Clear();  // Clear current items
+            decimal totalOrder = 0m;
+
+            foreach (var order in orderedDrinks)
+            {
+                Drink drink = order.Key;
+                int count = order.Value;
+                decimal total = ((drink.MinPrice + drink.MaxPrice) / 2) * count;
+                totalOrder += total;
+                reciptDrinkListBox.Items.Add($"{drink.Name} x {count} = {total.ToString("F2")}€");
+            }
+            reciptDrinkListBox.Items.Add("");
+
+            lblTotal.Text = $"Total: {totalOrder.ToString("F2")}€";
+
+            
+            int vakjes = (int)(totalOrder / 0.25m);
+            lblVakjes.Text = $"Vakjes: {vakjes.ToString("F2")}";
+        }
+        private void PositionLabels()
+        {
+            int padding = 10;
+            int lblTotalY = reciptDrinkListBox.Top + reciptDrinkListBox.Height + padding;
+            int lblVakjesY = lblTotalY + lblTotal.Height + padding;
+            int lblX = reciptDrinkListBox.Left; 
+            lblTotal.Location = new Point(lblX, lblTotalY);
+            lblVakjes.Location = new Point(lblX, lblVakjesY);
         }
     }
 }
