@@ -24,6 +24,8 @@ namespace beursfuif
             public decimal MinPrice { get; set; }
             public decimal MaxPrice { get; set; }
             public decimal PriceInterval { get; set; }
+            public int RecentPurchaseCount { get; set; } = 0;
+            public int Threshold { get; set; }
             // Add other properties as needed
         }
 

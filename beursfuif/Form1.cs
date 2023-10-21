@@ -406,6 +406,8 @@ namespace beursfuif
             reciptDrinkListBox.Items.Clear();
             timer1.Stop();
             countdown = 10;
+            lblTotal.Text = "Total: €0.00";
+            lblVakjes.Text = "Vakjes: 0";
             UpdateTimerLabel();
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
