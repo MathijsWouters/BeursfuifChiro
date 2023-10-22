@@ -22,6 +22,8 @@ namespace beursfuif
         private bool partyModeActive = false;
         private Color originalCrashButtonColor;
         private bool isOriginalColor = true;
+        public delegate void DrinksUpdatedEventHandler(List<Drink> updatedDrinks);
+        public event DrinksUpdatedEventHandler DrinksUpdated;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
         private Dictionary<Drink, int> orderedDrinks = new Dictionary<Drink, int>();
@@ -148,8 +150,8 @@ namespace beursfuif
         }
         private void OpenBeursButton_Click(object sender, EventArgs e)
         {
-            Beurs Beurs = new Beurs();
-            Beurs.Show();
+            var beursForm = new Beurs(drinks, this); 
+            beursForm.Show();
         }
         private void AddDrinksButton_Click(object sender, EventArgs e)
         {
@@ -599,6 +601,7 @@ namespace beursfuif
                 drink.CurrentPrice = Math.Max(drink.MinPrice, Math.Min(drink.CurrentPrice, drink.MaxPrice));
                 drink.CurrentAmountPurchased = 0;
             }
+            DrinksUpdated?.Invoke(drinks);
             RefreshDrinkLayout();
         }
         private bool RandomChance()
@@ -776,8 +779,7 @@ namespace beursfuif
             {
                 drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2 + drink.PriceInterval;
             }
-
-            RefreshDrinkLayout(); // Assuming this updates your GUI or relevant displays.
+            RefreshDrinkLayout(); 
         }
     }
 }
