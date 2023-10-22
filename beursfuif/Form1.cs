@@ -19,6 +19,9 @@ namespace beursfuif
         private Point lastLocation;
         private ListBox reciptDrinkListBox;
         private FlowLayoutPanel flowLayoutPanel;
+        private bool partyModeActive = false;
+        private Color originalCrashButtonColor;
+        private bool isOriginalColor = true;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
         private Dictionary<Drink, int> orderedDrinks = new Dictionary<Drink, int>();
@@ -35,13 +38,26 @@ namespace beursfuif
             this.FormBorderStyle = FormBorderStyle.None;
             this.KeyPreview = true;
             this.Resize += Form1_Resize;
-            
+            CrashButton.Location = new Point((this.ClientSize.Width - CrashButton.Width) / 2,
+                     this.ClientSize.Height - CrashButton.Height - 50);
+            this.Resize += (s, e) =>
+            {
+                CrashButton.Location = new Point((this.ClientSize.Width - CrashButton.Width) / 2,
+                                                 this.ClientSize.Height - CrashButton.Height - 50);
+            };
+            if (!this.Controls.Contains(CrashButton))
+            {
+                this.Controls.Add(CrashButton);
+            }
+
             reciptDrinkListBox.Font = new Font(reciptDrinkListBox.Font.FontFamily, reciptDrinkListBox.Font.Size + 3, FontStyle.Bold);
 
             lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
             lblVakjes.Font = new Font(lblVakjes.Font.FontFamily, lblVakjes.Font.Size + 4, FontStyle.Bold);
             priceUpdateTimer.Interval = 300000;
             priceUpdateTimer.Tick += PriceUpdateTimer_Tick;
+            partyModeTimer.Interval = 500; 
+            partyModeTimer.Tick += PartyModeTimer_Tick;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -92,6 +108,7 @@ namespace beursfuif
             }
             timer1.Interval = 1000;
             timer1.Tick += Timer1_Tick;
+            
             PositionLabels();
             PositionTimerLabel();
         }
@@ -217,7 +234,7 @@ namespace beursfuif
             drinkButton.Width = 250;
             drinkButton.Height = 95;
             drinkButton.LeftColor = drink.Color;  // Assigning the drink's color to LeftColor
-            drinkButton.Margin = new Padding(5);
+            drinkButton.Margin = new Padding(20);
             drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2;
             string buttonText = $"{drinkNumber}\n{drink.Name}\n{drink.CurrentPrice.ToString("F2")} EUR";
             drinkButton.Text = buttonText;
@@ -322,7 +339,12 @@ namespace beursfuif
             {
                 DeleteLastItem(sender, e);
                 e.Handled = true;
-                return; 
+                return;
+            }
+            if (e.KeyCode == Keys.Tab)
+            {
+                CrashButton_Click(sender, e);
+                e.Handled = true;
             }
             int numberPressed = -1;
             switch (e.KeyCode)
@@ -557,6 +579,12 @@ namespace beursfuif
         }
         private void UpdateDrinkPrices()
         {
+            if (partyModeActive)
+            {
+                CrashButton.BackColor = originalCrashButtonColor;
+                partyModeTimer.Stop();
+                partyModeActive = false;
+            }
             foreach (var drink in drinks)
             {
                 if (drink.CurrentAmountPurchased > drink.Threshold)
@@ -696,6 +724,46 @@ namespace beursfuif
             // This will retrieve the first match. If no match is found, it returns null.
             return drinks.FirstOrDefault(d => d.Name == drinkName);
         }
+        private void CrashPrices()
+        {
+            foreach (var drink in drinks)
+            {
+                drink.CurrentPrice = drink.MinPrice;
+            }
 
+            RefreshDrinkLayout();
+        }
+
+        private void CrashButton_Click(object sender, EventArgs e)
+        {
+            CrashPrices();
+            partyModeTimer.Start();
+            ResetPriceUpdateTimer();
+        }
+        private void ResetPriceUpdateTimer()
+        {
+            if (priceUpdateTimer != null)
+            {
+                priceUpdateTimer.Stop(); 
+                priceUpdateTimer.Start(); 
+            }
+        }
+        private void PartyModeTimer_Tick(object sender, EventArgs e)
+        {
+            if (isOriginalColor)
+            {
+                CrashButton.BackColor = GetRandomColor();
+            }
+            else
+            {
+                CrashButton.BackColor = originalCrashButtonColor;
+            }
+            isOriginalColor = !isOriginalColor; // Toggle the flag
+        }
+        private Color GetRandomColor()
+        {
+            Random rand = new Random();
+            return Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+        }
     }
 }

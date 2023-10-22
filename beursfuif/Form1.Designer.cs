@@ -1,4 +1,6 @@
-﻿namespace beursfuif
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
+
+namespace beursfuif
 {
     partial class Form1
     {
@@ -46,6 +48,7 @@
             timer1 = new System.Windows.Forms.Timer(components);
             priceUpdateTimer = new System.Windows.Forms.Timer(components);
             lblTimer = new Label();
+            CrashButton = new Button();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -177,7 +180,7 @@
             flowLayoutPanel.Location = new Point(0, 56);
             flowLayoutPanel.Name = "flowLayoutPanel";
             flowLayoutPanel.Padding = new Padding(10);
-            flowLayoutPanel.Size = new Size(800, 345);
+            flowLayoutPanel.Size = new Size(890, 405);
             flowLayoutPanel.TabIndex = 1;
             // 
             // lblTotal
@@ -219,12 +222,24 @@
             lblTimer.Size = new Size(0, 15);
             lblTimer.TabIndex = 7;
             // 
-            // Form1
+            // CrashButton
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            CrashButton.ForeColor = Color.White;
+            CrashButton.Name = "CrashButton";
+            CrashButton.TabIndex = 7;
+            CrashButton.Text = "Crash!";
+            // Set the font style and size
+            CrashButton.Font = new Font("Arial", 36, FontStyle.Bold);
+            CrashButton.Size = new Size(300, 100);
+            CrashButton.Click += CrashButton_Click;
+                // 
+                // Form1
+                // 
+                AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1689, 634);
+            Controls.Add(CrashButton);
             Controls.Add(lblVakjes);
             Controls.Add(lblTotal);
             Controls.Add(lblTimer);
@@ -252,8 +267,10 @@
         private Label lblVakjes;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer priceUpdateTimer;
+        private System.Windows.Forms.Timer partyModeTimer = new System.Windows.Forms.Timer();
         private Label lblTimer;
         private Button startTimerButton;
         private Button stopfeest;
+        private Button CrashButton;
     }
 }
