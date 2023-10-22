@@ -7,6 +7,8 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using static beursfuif.AddDrinksForm;
+using System.Collections.Generic;
+
 namespace beursfuif
 {
     public partial class Form1 : Form
@@ -32,8 +34,8 @@ namespace beursfuif
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             this.KeyPreview = true;
-            this.KeyDown += Form1_KeyDown;
             this.Resize += Form1_Resize;
+            
             reciptDrinkListBox.Font = new Font(reciptDrinkListBox.Font.FontFamily, reciptDrinkListBox.Font.Size + 3, FontStyle.Bold);
 
             lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
@@ -43,6 +45,7 @@ namespace beursfuif
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.KeyDown += Form1_KeyDown;
             string databaseFileName = "DrinksDB.db";
             string connectionString = $"Data Source={databaseFileName};Version=3;";
 
@@ -315,12 +318,15 @@ namespace beursfuif
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Delete)
+            {
+                DeleteLastItem(sender, e);
+                e.Handled = true;
+                return; 
+            }
             int numberPressed = -1;
             switch (e.KeyCode)
             {
-                case Keys.NumPad0:
-                    numberPressed = 0;
-                    break;
                 case Keys.NumPad1:
                     numberPressed = 1;
                     break;
@@ -408,7 +414,6 @@ namespace beursfuif
                 totalOrder += total;
                 reciptDrinkListBox.Items.Add($"{drink.Name} x {count} = {total.ToString("F2")}€");
             }
-            reciptDrinkListBox.Items.Add("");
 
             lblTotal.Text = $"Total: {totalOrder.ToString("F2")}€";
 
@@ -624,7 +629,6 @@ namespace beursfuif
                         cmd.ExecuteNonQuery();
                     }
                 }
-
                 string downloadsPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
                 string excelFileName = Path.Combine(downloadsPath, "Beursfuifdata.xlsx");
                 workbook.SaveAs(excelFileName);
@@ -632,5 +636,66 @@ namespace beursfuif
                 this.Close();
             }
         }
+        private void DeleteLastItem(object sender, EventArgs e)
+        {
+            // Check if the listbox has items.
+            if (reciptDrinkListBox.Items.Count > 0)
+            {
+                string lastItem = reciptDrinkListBox.Items[reciptDrinkListBox.Items.Count - 1].ToString();
+                string[] parts = lastItem.Split(new[] { " x " }, StringSplitOptions.None);
+
+                if (parts.Length == 2)
+                {
+                    string drinkNameString = parts[0].Trim();
+                    Drink drink = GetDrinkByName(drinkNameString);  // Fetch the Drink object
+                    double totalPriceForItem;
+                    int quantity;
+
+                    if (int.TryParse(parts[1].Split('=')[0].Trim(), out quantity)
+                        && double.TryParse(parts[1].Split('=')[1].Replace("€", "").Trim(), out totalPriceForItem))
+                    {
+                        double pricePerUnit = totalPriceForItem / quantity;
+
+                        string totalString = lblTotal.Text.Replace("Total: ", "").Replace("€", "").Trim();
+                        if (double.TryParse(totalString, out double totalOrder))
+                        {
+                            totalOrder -= pricePerUnit;
+                            lblTotal.Text = $"Total: {totalOrder.ToString("F2")}€";
+                        }
+                        if (quantity > 1)
+                        {
+                            quantity--;
+                            reciptDrinkListBox.Items[reciptDrinkListBox.Items.Count - 1] = $"{drinkNameString} x {quantity} = {(pricePerUnit * quantity).ToString("F2")}€";
+
+                            // Update the dictionary using the Drink object
+                            if (orderedDrinks.ContainsKey(drink))
+                            {
+                                orderedDrinks[drink] = quantity;
+                            }
+                        }
+                        else
+                        {
+                            reciptDrinkListBox.Items.RemoveAt(reciptDrinkListBox.Items.Count - 1);
+
+                            // Remove the drink from the dictionary using the Drink object
+                            if (orderedDrinks.ContainsKey(drink))
+                            {
+                                orderedDrinks.Remove(drink);
+                            }
+                        }
+                        // Update vakjes
+                        int vakjes = (int)(totalOrder / 0.25);
+                        lblVakjes.Text = $"Vakjes: {vakjes}";
+                    }
+                }
+            }
+        }
+        private Drink GetDrinkByName(string drinkName)
+        {
+            // Assuming you have a list or collection of all drinks somewhere in your code.
+            // This will retrieve the first match. If no match is found, it returns null.
+            return drinks.FirstOrDefault(d => d.Name == drinkName);
+        }
+
     }
 }
