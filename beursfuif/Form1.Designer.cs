@@ -76,7 +76,7 @@ namespace beursfuif
             // stopfeest
             // 
             stopfeest.ForeColor = Color.White;
-            stopfeest.Location = new Point(1135, 5);
+            stopfeest.Location = new Point(1135, 4);
             stopfeest.Name = "stopfeest";
             stopfeest.Size = new Size(84, 21);
             stopfeest.TabIndex = 6;
@@ -224,18 +224,18 @@ namespace beursfuif
             // 
             // CrashButton
             // 
+            CrashButton.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point);
             CrashButton.ForeColor = Color.White;
+            CrashButton.Location = new Point(0, 0);
             CrashButton.Name = "CrashButton";
+            CrashButton.Size = new Size(300, 100);
             CrashButton.TabIndex = 7;
             CrashButton.Text = "Crash!";
-            // Set the font style and size
-            CrashButton.Font = new Font("Arial", 36, FontStyle.Bold);
-            CrashButton.Size = new Size(300, 100);
             CrashButton.Click += CrashButton_Click;
-                // 
-                // Form1
-                // 
-                AutoScaleDimensions = new SizeF(7F, 15F);
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1689, 634);

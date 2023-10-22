@@ -54,9 +54,9 @@ namespace beursfuif
 
             lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
             lblVakjes.Font = new Font(lblVakjes.Font.FontFamily, lblVakjes.Font.Size + 4, FontStyle.Bold);
-            priceUpdateTimer.Interval = 300000;
+            priceUpdateTimer.Interval = 10000;
             priceUpdateTimer.Tick += PriceUpdateTimer_Tick;
-            partyModeTimer.Interval = 500; 
+            partyModeTimer.Interval = 500;
             partyModeTimer.Tick += PartyModeTimer_Tick;
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -108,7 +108,7 @@ namespace beursfuif
             }
             timer1.Interval = 1000;
             timer1.Tick += Timer1_Tick;
-            
+
             PositionLabels();
             PositionTimerLabel();
         }
@@ -581,8 +581,8 @@ namespace beursfuif
         {
             if (partyModeActive)
             {
-                CrashButton.BackColor = originalCrashButtonColor;
                 partyModeTimer.Stop();
+                CrashButton.BackColor = originalCrashButtonColor;
                 partyModeActive = false;
             }
             foreach (var drink in drinks)
@@ -613,6 +613,10 @@ namespace beursfuif
         }
         private void PriceUpdateTimer_Tick(object sender, EventArgs e)
         {
+            if (partyModeActive)
+            {
+                ResetPricesToAverage();
+            }
             UpdateDrinkPrices();
             priceUpdateTimer.Stop();
             priceUpdateTimer.Start();
@@ -736,6 +740,7 @@ namespace beursfuif
 
         private void CrashButton_Click(object sender, EventArgs e)
         {
+            partyModeActive = true;
             CrashPrices();
             partyModeTimer.Start();
             ResetPriceUpdateTimer();
@@ -744,8 +749,8 @@ namespace beursfuif
         {
             if (priceUpdateTimer != null)
             {
-                priceUpdateTimer.Stop(); 
-                priceUpdateTimer.Start(); 
+                priceUpdateTimer.Stop();
+                priceUpdateTimer.Start();
             }
         }
         private void PartyModeTimer_Tick(object sender, EventArgs e)
@@ -764,6 +769,15 @@ namespace beursfuif
         {
             Random rand = new Random();
             return Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+        }
+        private void ResetPricesToAverage()
+        {
+            foreach (var drink in drinks)
+            {
+                drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2 + drink.PriceInterval;
+            }
+
+            RefreshDrinkLayout(); // Assuming this updates your GUI or relevant displays.
         }
     }
 }
