@@ -486,23 +486,42 @@ namespace beursfuif
                                     }
                                 }
                             }
-
-                            Drink drink = GetDrinkByName(drinkName);
-                            if (drink != null)
-                            {
-                                totalIncome += quantity * (double)drink.CurrentPrice;
-                            }
                         }
                     }
                 }
-
-                // Insert total income for the evening after processing all drinks
-                string incomeQuery = $"INSERT INTO TotalIncome (Inkomsten) VALUES ({totalIncome.ToString(CultureInfo.InvariantCulture)})";
-                using (SQLiteCommand cmd = new SQLiteCommand(incomeQuery, connection))
+                string totalString = lblTotal.Text.Replace("Total: ", "").Replace("€", "").Trim();
+                if (double.TryParse(totalString, out totalIncome))
                 {
-                    cmd.ExecuteNonQuery();
+                    // Successfully parsed total income from the label
+                }
+                else
+                {
+                    // Failed to parse the total from the label, handle this case (e.g., set totalIncome to 0 or log an error)
+                    totalIncome = 0;
                 }
 
+                string checkIncomeQuery = "SELECT COUNT(*) FROM TotalIncome";
+                using (SQLiteCommand cmdCheckIncome = new SQLiteCommand(checkIncomeQuery, connection))
+                {
+                    int count = Convert.ToInt32(cmdCheckIncome.ExecuteScalar());
+                    if (count == 0) // If no row exists
+                    {
+                        string incomeQuery = $"INSERT INTO TotalIncome (Inkomsten) VALUES ({totalIncome})";
+                        using (SQLiteCommand cmdInsert = new SQLiteCommand(incomeQuery, connection))
+                        {
+                            cmdInsert.ExecuteNonQuery();
+                        }
+                    }
+                    else // Update the existing total
+                    {
+                        string formattedIncome = totalIncome.ToString(CultureInfo.InvariantCulture);
+                        string incomeQuery = $"UPDATE TotalIncome SET Inkomsten = Inkomsten + {formattedIncome}";
+                        using (SQLiteCommand cmdUpdate = new SQLiteCommand(incomeQuery, connection))
+                        {
+                            cmdUpdate.ExecuteNonQuery();
+                        }
+                    }
+                }
                 reciptDrinkListBox.Items.Clear();
                 orderedDrinks.Clear();
                 timer1.Stop();
@@ -565,11 +584,6 @@ namespace beursfuif
             priceUpdateTimer.Stop();
             priceUpdateTimer.Start();
         }
-        private Drink GetDrinkByName(string drinkName)
-        {
-            return drinks.FirstOrDefault(d => d.Name.Equals(drinkName, StringComparison.OrdinalIgnoreCase));
-        }
-
         private void stopfeest_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to end the party?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -615,6 +629,7 @@ namespace beursfuif
                 string excelFileName = Path.Combine(downloadsPath, "Beursfuifdata.xlsx");
                 workbook.SaveAs(excelFileName);
                 MessageBox.Show($"Data exported to {excelFileName} and database cleared.");
+                this.Close();
             }
         }
     }
