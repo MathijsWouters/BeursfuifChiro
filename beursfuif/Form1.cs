@@ -1,7 +1,10 @@
 
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Globalization;
 using Newtonsoft.Json;
+using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using static beursfuif.AddDrinksForm;
 namespace beursfuif
@@ -9,6 +12,7 @@ namespace beursfuif
     public partial class Form1 : Form
     {
         private bool mouseDown;
+        private double totalIncome = 0.0;
         private int countdown = 10;
         private Point lastLocation;
         private ListBox reciptDrinkListBox;
@@ -34,18 +38,40 @@ namespace beursfuif
 
             lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
             lblVakjes.Font = new Font(lblVakjes.Font.FontFamily, lblVakjes.Font.Size + 4, FontStyle.Bold);
-            priceUpdateTimer.Interval = 3000; 
+            priceUpdateTimer.Interval = 300000;
             priceUpdateTimer.Tick += PriceUpdateTimer_Tick;
-            // Set initial position of the addButton
-            // Label properties
-            // TextBox properties
-            // Button properties
-            // Example of opening the AddDrinksForm
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            string databaseFileName = "DrinksDB.db";
+            string connectionString = $"Data Source={databaseFileName};Version=3;";
+
             try
             {
+                // Check if the SQLite database file exists
+                if (!File.Exists(databaseFileName))
+                {
+                    // Create a new SQLite database
+                    SQLiteConnection.CreateFile(databaseFileName);
+
+                    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        // Create necessary tables
+                        string createDrinksSoldTable = "CREATE TABLE DrinksSold (DrinkName TEXT, QuantitySold INTEGER)";
+                        string createTotalIncomeTable = "CREATE TABLE TotalIncome (Inkomsten REAL)";
+
+                        using (SQLiteCommand cmd = new SQLiteCommand(createDrinksSoldTable, connection))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                        using (SQLiteCommand cmd = new SQLiteCommand(createTotalIncomeTable, connection))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
                 if (File.Exists("drinksData.json"))
                 {
                     string json = File.ReadAllText("drinksData.json");
@@ -418,13 +444,73 @@ namespace beursfuif
         }
         private void ClearDrinks()
         {
-            reciptDrinkListBox.Items.Clear();
-            orderedDrinks.Clear();
-            timer1.Stop();
-            countdown = 10;
-            lblTotal.Text = "Total: €0.00";
-            lblVakjes.Text = "Vakjes: 0";
-            UpdateTimerLabel();
+            string databaseFileName = "DrinksDB.db";
+            string connectionString = $"Data Source={databaseFileName};Version=3;";
+
+            double totalIncome = 0; // Reset total income
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                foreach (string order in reciptDrinkListBox.Items)
+                {
+                    if (!order.Contains(" x ") || !order.Contains("="))
+                        continue;  // Skip processing for this item
+
+                    string[] parts = order.Split(new[] { " x " }, StringSplitOptions.None);
+                    if (parts.Length == 2)
+                    {
+                        string drinkName = parts[0].Trim();
+                        int quantity;
+                        if (int.TryParse(parts[1].Split('=')[0].Trim(), out quantity))
+                        {
+                            string checkQuery = $"SELECT COUNT(*) FROM DrinksSold WHERE DrinkName = '{drinkName}'";
+                            using (SQLiteCommand cmdCheck = new SQLiteCommand(checkQuery, connection))
+                            {
+                                int count = Convert.ToInt32(cmdCheck.ExecuteScalar());
+                                if (count == 0) // Drink does not exist in the table
+                                {
+                                    string insertQuery = $"INSERT INTO DrinksSold (DrinkName, QuantitySold) VALUES ('{drinkName}', {quantity})";
+                                    using (SQLiteCommand cmdInsert = new SQLiteCommand(insertQuery, connection))
+                                    {
+                                        cmdInsert.ExecuteNonQuery();
+                                    }
+                                }
+                                else // Drink exists, just update its quantity
+                                {
+                                    string updateQuery = $"UPDATE DrinksSold SET QuantitySold = QuantitySold + {quantity} WHERE DrinkName = '{drinkName}'";
+                                    using (SQLiteCommand cmdUpdate = new SQLiteCommand(updateQuery, connection))
+                                    {
+                                        cmdUpdate.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+
+                            Drink drink = GetDrinkByName(drinkName);
+                            if (drink != null)
+                            {
+                                totalIncome += quantity * (double)drink.CurrentPrice;
+                            }
+                        }
+                    }
+                }
+
+                // Insert total income for the evening after processing all drinks
+                string incomeQuery = $"INSERT INTO TotalIncome (Inkomsten) VALUES ({totalIncome.ToString(CultureInfo.InvariantCulture)})";
+                using (SQLiteCommand cmd = new SQLiteCommand(incomeQuery, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                reciptDrinkListBox.Items.Clear();
+                orderedDrinks.Clear();
+                timer1.Stop();
+                countdown = 10;
+                lblTotal.Text = "Total: €0.00";
+                lblVakjes.Text = "Vakjes: 0";
+                UpdateTimerLabel();
+            }
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -458,6 +544,7 @@ namespace beursfuif
                 {
                     drink.CurrentPrice -= drink.PriceInterval;
                 }
+                drink.CurrentPrice = Math.Max(drink.MinPrice, Math.Min(drink.CurrentPrice, drink.MaxPrice));
                 drink.CurrentAmountPurchased = 0;
             }
             RefreshDrinkLayout();
@@ -469,14 +556,66 @@ namespace beursfuif
         }
         private void StartTimerButton_Click(object sender, EventArgs e)
         {
-                priceUpdateTimer.Start();
-                startTimerButton.BackColor = Color.Green;
+            priceUpdateTimer.Start();
+            startTimerButton.BackColor = Color.Green;
         }
         private void PriceUpdateTimer_Tick(object sender, EventArgs e)
         {
             UpdateDrinkPrices();
             priceUpdateTimer.Stop();
             priceUpdateTimer.Start();
+        }
+        private Drink GetDrinkByName(string drinkName)
+        {
+            return drinks.FirstOrDefault(d => d.Name.Equals(drinkName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private void stopfeest_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to end the party?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                string databaseFileName = "DrinksDB.db";
+                string connectionString = $"Data Source={databaseFileName};Version=3;";
+
+                var workbook = new ClosedXML.Excel.XLWorkbook();
+
+                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Export DrinksSold table to Excel
+                    SQLiteDataAdapter da = new SQLiteDataAdapter("SELECT * FROM DrinksSold", connection);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    workbook.Worksheets.Add(dt, "Drinks Sold");
+
+                    // Export TotalIncome table to Excel
+                    da = new SQLiteDataAdapter("SELECT * FROM TotalIncome", connection);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    workbook.Worksheets.Add(dt, "Total Income");
+
+                    // Empty the DrinksSold and TotalIncome tables
+                    string clearQuery = "DELETE FROM DrinksSold";
+                    using (SQLiteCommand cmd = new SQLiteCommand(clearQuery, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    clearQuery = "DELETE FROM TotalIncome";
+                    using (SQLiteCommand cmd = new SQLiteCommand(clearQuery, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                string downloadsPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
+                string excelFileName = Path.Combine(downloadsPath, "Beursfuifdata.xlsx");
+                workbook.SaveAs(excelFileName);
+                MessageBox.Show($"Data exported to {excelFileName} and database cleared.");
+            }
         }
     }
 }

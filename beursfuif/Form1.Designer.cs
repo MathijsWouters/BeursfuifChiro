@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             titleBarPanel = new Panel();
+            stopfeest = new Button();
             startTimerButton = new Button();
             deleteDrinksButton = new Button();
             addDrinksButton = new Button();
@@ -51,6 +52,7 @@
             // titleBarPanel
             // 
             titleBarPanel.BackColor = Color.FromArgb(35, 35, 38);
+            titleBarPanel.Controls.Add(stopfeest);
             titleBarPanel.Controls.Add(startTimerButton);
             titleBarPanel.Controls.Add(deleteDrinksButton);
             titleBarPanel.Controls.Add(addDrinksButton);
@@ -68,15 +70,26 @@
             titleBarPanel.MouseMove += titleBarPanel_MouseMove;
             titleBarPanel.MouseUp += titleBarPanel_MouseUp;
             // 
+            // stopfeest
+            // 
+            stopfeest.ForeColor = Color.White;
+            stopfeest.Location = new Point(1135, 5);
+            stopfeest.Name = "stopfeest";
+            stopfeest.Size = new Size(84, 21);
+            stopfeest.TabIndex = 6;
+            stopfeest.Text = "Stop feest";
+            stopfeest.Click += stopfeest_Click;
+            // 
             // startTimerButton
             // 
-            startTimerButton.ForeColor = Color.White;
             startTimerButton.BackColor = Color.Red;
+            startTimerButton.ForeColor = Color.White;
             startTimerButton.Location = new Point(1048, 3);
             startTimerButton.Name = "startTimerButton";
             startTimerButton.Size = new Size(81, 23);
             startTimerButton.TabIndex = 0;
             startTimerButton.Text = "Start feestje";
+            startTimerButton.UseVisualStyleBackColor = false;
             startTimerButton.Click += StartTimerButton_Click;
             // 
             // deleteDrinksButton
@@ -241,5 +254,6 @@
         private System.Windows.Forms.Timer priceUpdateTimer;
         private Label lblTimer;
         private Button startTimerButton;
+        private Button stopfeest;
     }
 }
