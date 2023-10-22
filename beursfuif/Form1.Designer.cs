@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             titleBarPanel = new Panel();
+            startTimerButton = new Button();
             deleteDrinksButton = new Button();
             addDrinksButton = new Button();
             openBeursButton = new Button();
@@ -38,11 +39,11 @@
             maximizeButton = new Button();
             titleLabel = new Label();
             flowLayoutPanel = new FlowLayoutPanel();
-            reciptDrinkListBox = new ListBox();
             lblTotal = new Label();
             lblVakjes = new Label();
+            reciptDrinkListBox = new ListBox();
             timer1 = new System.Windows.Forms.Timer(components);
-            timer2 = new System.Windows.Forms.Timer(components);
+            priceUpdateTimer = new System.Windows.Forms.Timer(components);
             lblTimer = new Label();
             titleBarPanel.SuspendLayout();
             SuspendLayout();
@@ -50,6 +51,7 @@
             // titleBarPanel
             // 
             titleBarPanel.BackColor = Color.FromArgb(35, 35, 38);
+            titleBarPanel.Controls.Add(startTimerButton);
             titleBarPanel.Controls.Add(deleteDrinksButton);
             titleBarPanel.Controls.Add(addDrinksButton);
             titleBarPanel.Controls.Add(openBeursButton);
@@ -65,6 +67,17 @@
             titleBarPanel.MouseDown += titleBarPanel_MouseDown;
             titleBarPanel.MouseMove += titleBarPanel_MouseMove;
             titleBarPanel.MouseUp += titleBarPanel_MouseUp;
+            // 
+            // startTimerButton
+            // 
+            startTimerButton.ForeColor = Color.White;
+            startTimerButton.BackColor = Color.Red;
+            startTimerButton.Location = new Point(1048, 3);
+            startTimerButton.Name = "startTimerButton";
+            startTimerButton.Size = new Size(81, 23);
+            startTimerButton.TabIndex = 0;
+            startTimerButton.Text = "Start feestje";
+            startTimerButton.Click += StartTimerButton_Click;
             // 
             // deleteDrinksButton
             // 
@@ -154,21 +167,10 @@
             flowLayoutPanel.Size = new Size(800, 345);
             flowLayoutPanel.TabIndex = 1;
             // 
-            // reciptDrinkListBox
-            // 
-            reciptDrinkListBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            reciptDrinkListBox.BackColor = Color.FromArgb(45, 45, 48);
-            reciptDrinkListBox.ForeColor = Color.White;
-            reciptDrinkListBox.ItemHeight = 15;
-            reciptDrinkListBox.Location = new Point(0, 0);
-            reciptDrinkListBox.Name = "reciptDrinkListBox";
-            reciptDrinkListBox.Size = new Size(300, 199);
-            reciptDrinkListBox.TabIndex = 0;
-            // 
             // lblTotal
             // 
             lblTotal.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTotal.Location = new Point(0, 0);
+            lblTotal.Location = new Point(1157, 258);
             lblTotal.Name = "lblTotal";
             lblTotal.Size = new Size(300, 30);
             lblTotal.TabIndex = 5;
@@ -178,12 +180,23 @@
             // lblVakjes
             // 
             lblVakjes.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            lblVakjes.Location = new Point(0, 0);
+            lblVakjes.Location = new Point(1157, 307);
             lblVakjes.Name = "lblVakjes";
             lblVakjes.Size = new Size(300, 30);
             lblVakjes.TabIndex = 6;
             lblVakjes.Text = "Vakjes: 0";
             lblVakjes.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // reciptDrinkListBox
+            // 
+            reciptDrinkListBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            reciptDrinkListBox.BackColor = Color.FromArgb(45, 45, 48);
+            reciptDrinkListBox.ForeColor = Color.White;
+            reciptDrinkListBox.ItemHeight = 15;
+            reciptDrinkListBox.Location = new Point(1157, 36);
+            reciptDrinkListBox.Name = "reciptDrinkListBox";
+            reciptDrinkListBox.Size = new Size(300, 199);
+            reciptDrinkListBox.TabIndex = 0;
             // 
             // lblTimer
             // 
@@ -199,11 +212,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1689, 634);
-            Controls.Add(lblTimer);
-            Controls.Add(lblTotal);
             Controls.Add(lblVakjes);
-            Controls.Add(reciptDrinkListBox);
+            Controls.Add(lblTotal);
+            Controls.Add(lblTimer);
             Controls.Add(titleBarPanel);
+            Controls.Add(reciptDrinkListBox);
             Controls.Add(flowLayoutPanel);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
@@ -225,7 +238,8 @@
         private Label lblTotal;
         private Label lblVakjes;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Timer priceUpdateTimer;
         private Label lblTimer;
+        private Button startTimerButton;
     }
 }

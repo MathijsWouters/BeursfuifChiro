@@ -1,1 +1,1 @@
-[{"Name":"cola","Color":"128, 64, 64","MinPrice":0.0,"MaxPrice":1.0,"PriceInterval":0.0}]
+[{"Name":"cola","Color":"Black","MinPrice":1.0,"MaxPrice":2.0,"PriceInterval":0.25,"RecentPurchaseCount":0,"Threshold":1,"CurrentPrice":1.5,"CurrentAmountPurchased":0}]

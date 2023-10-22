@@ -34,6 +34,8 @@ namespace beursfuif
 
             lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
             lblVakjes.Font = new Font(lblVakjes.Font.FontFamily, lblVakjes.Font.Size + 4, FontStyle.Bold);
+            priceUpdateTimer.Interval = 3000; 
+            priceUpdateTimer.Tick += PriceUpdateTimer_Tick;
             // Set initial position of the addButton
             // Label properties
             // TextBox properties
@@ -187,8 +189,8 @@ namespace beursfuif
             drinkButton.Height = 95;
             drinkButton.LeftColor = drink.Color;  // Assigning the drink's color to LeftColor
             drinkButton.Margin = new Padding(5);
-            decimal averagePrice = (drink.MinPrice + drink.MaxPrice) / 2;
-            string buttonText = $"{drinkNumber}\n{drink.Name}\n{averagePrice.ToString("F2")} EUR";
+            drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2;
+            string buttonText = $"{drinkNumber}\n{drink.Name}\n{drink.CurrentPrice.ToString("F2")} EUR";
             drinkButton.Text = buttonText;
             drinkButton.Font = new Font(drinkButton.Font.FontFamily, drinkButton.Font.Size * 1.5f, FontStyle.Bold);
             drinkButton.AssociatedDrink = drink;
@@ -256,10 +258,23 @@ namespace beursfuif
             foreach (var control in flowLayoutPanel.Controls.OfType<CustomButton>())
             {
                 string[] lines = control.Text.Split('\n');
-                control.Text = $"{counter}\n{lines[1]}\n{lines[2]}";
+                if (lines.Length > 1)
+                {
+                    string drinkName = lines[1].Trim();  // Assuming the name is on the second line
+
+                    // Find the corresponding drink based on the name
+                    Drink correspondingDrink = drinks.FirstOrDefault(d => d.Name == drinkName);
+
+                    if (correspondingDrink != null)
+                    {
+                        string updatedPriceText = $"{correspondingDrink.CurrentPrice:C2}"; // Convert to currency format
+                        control.Text = $"{counter}\n{drinkName}\n{updatedPriceText}";
+                    }
+                }
                 counter++;
             }
         }
+
         private void SaveDrinksToFile()
         {
             try
@@ -363,7 +378,7 @@ namespace beursfuif
             {
                 Drink drink = order.Key;
                 int count = order.Value;
-                decimal total = ((drink.MinPrice + drink.MaxPrice) / 2) * count;
+                decimal total = drink.CurrentPrice * count;
                 totalOrder += total;
                 reciptDrinkListBox.Items.Add($"{drink.Name} x {count} = {total.ToString("F2")}€");
             }
@@ -404,6 +419,7 @@ namespace beursfuif
         private void ClearDrinks()
         {
             reciptDrinkListBox.Items.Clear();
+            orderedDrinks.Clear();
             timer1.Stop();
             countdown = 10;
             lblTotal.Text = "Total: €0.00";
@@ -428,6 +444,39 @@ namespace beursfuif
             lblTimer.Font = new Font(currentFont.FontFamily, currentFont.Size + 2, FontStyle.Bold);
             lblTimer.Left = reciptDrinkListBox.Left + (reciptDrinkListBox.Width - lblTimer.Width) / 2;
             lblTimer.Top = reciptDrinkListBox.Top - lblTimer.Height - 10;
+        }
+        private void UpdateDrinkPrices()
+        {
+            foreach (var drink in drinks)
+            {
+                if (drink.CurrentAmountPurchased > drink.Threshold)
+                {
+                    var priceIncrease = drink.PriceInterval * (RandomChance() ? 2 : 1);
+                    drink.CurrentPrice += priceIncrease;
+                }
+                else
+                {
+                    drink.CurrentPrice -= drink.PriceInterval;
+                }
+                drink.CurrentAmountPurchased = 0;
+            }
+            RefreshDrinkLayout();
+        }
+        private bool RandomChance()
+        {
+            Random rand = new Random();
+            return rand.NextDouble() > 0.7;
+        }
+        private void StartTimerButton_Click(object sender, EventArgs e)
+        {
+                priceUpdateTimer.Start();
+                startTimerButton.BackColor = Color.Green;
+        }
+        private void PriceUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateDrinkPrices();
+            priceUpdateTimer.Stop();
+            priceUpdateTimer.Start();
         }
     }
 }
