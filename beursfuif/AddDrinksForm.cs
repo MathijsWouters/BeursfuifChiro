@@ -19,7 +19,7 @@ namespace beursfuif
         public delegate void DrinkAddedEventHandler(Drink newDrink);
         public class Drink
         {
-            public string Name { get; set; }
+            public string? Name { get; set; }
             public Color Color { get; set; }  // If you're using System.Drawing.Color
             public decimal MinPrice { get; set; }
             public decimal MaxPrice { get; set; }
