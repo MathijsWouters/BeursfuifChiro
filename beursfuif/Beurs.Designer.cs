@@ -54,11 +54,17 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Beurs";
             Text = "Beurs";
+            this.Resize += new System.EventHandler(this.Beurs_Resize); // Attach the Resize event handler
             ResumeLayout(false);
         }
 
         #endregion
-
+        private void Beurs_Resize(object sender, EventArgs e)
+        {
+            Beursgraph.Width = this.ClientSize.Width; 
+            Beursgraph.Height = (int)(this.ClientSize.Height * 0.8); 
+            Beursgraph.Top = 0; 
+        }
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private OxyPlot.WindowsForms.PlotView Beursgraph;
     }
