@@ -141,6 +141,7 @@ namespace beursfuif
         private void minimizeButton_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+            
         }
         private void maximizeButton_Click(object sender, EventArgs e)
         {
@@ -412,6 +413,7 @@ namespace beursfuif
         private void Form1_Resize(object sender, EventArgs e)
         {
             AdjustListBoxPosition();
+            PositionTimerLabel();
         }
         private void AdjustListBoxPosition()
         {
@@ -421,7 +423,9 @@ namespace beursfuif
             int padding = 10;
             int lblTotalY = reciptDrinkListBox.Top + reciptDrinkListBox.Height + padding;
             int lblX = this.ClientSize.Width - this.lblTotal.Width - 20;
+            lblTotal.Location = new Point(lblX, lblTotalY);
             int lblVakjesY = lblTotalY + this.lblTotal.Height + padding;
+            lblVakjes.Location = new Point(lblX, lblVakjesY);
         }
         private void RefreshOrderList()
         {
@@ -580,7 +584,7 @@ namespace beursfuif
             lblTimer.AutoSize = true;
             lblTimer.Text = "Time remaining: 10 seconds";
             Font currentFont = lblTimer.Font;
-            lblTimer.Font = new Font(currentFont.FontFamily, currentFont.Size + 2, FontStyle.Bold);
+            lblTimer.Font = new Font(currentFont.FontFamily, currentFont.Size, FontStyle.Bold);
             lblTimer.Left = reciptDrinkListBox.Left + (reciptDrinkListBox.Width - lblTimer.Width) / 2;
             lblTimer.Top = reciptDrinkListBox.Top - lblTimer.Height - 10;
         }

@@ -224,6 +224,8 @@ namespace beursfuif
             lblTimer.Name = "lblTimer";
             lblTimer.Size = new Size(0, 15);
             lblTimer.TabIndex = 7;
+            Font currentFont = lblTimer.Font;
+            lblTimer.Font = new Font(currentFont.FontFamily, currentFont.Size + 2);
             // 
             // CrashButton
             // 
