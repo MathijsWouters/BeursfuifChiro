@@ -57,7 +57,7 @@ namespace beursfuif
 
             lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
             lblVakjes.Font = new Font(lblVakjes.Font.FontFamily, lblVakjes.Font.Size + 4, FontStyle.Bold);
-            priceUpdateTimer.Interval = 10000;
+            priceUpdateTimer.Interval = 3000;
             priceUpdateTimer.Tick += PriceUpdateTimer_Tick;
             partyModeTimer.Interval = 500;
             partyModeTimer.Tick += PartyModeTimer_Tick;

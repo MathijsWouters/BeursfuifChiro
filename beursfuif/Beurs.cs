@@ -110,12 +110,22 @@ namespace beursfuif
                     Title = drink.Name,
                     Color = ConvertToOxyColor(drink.Color)
                 };
+
                 if (!drinkDataPoints.ContainsKey(drink.Name))
                 {
                     drinkDataPoints[drink.Name] = new Queue<DataPoint>(MAX_DATAPOINTS);
+                    var minutesToAdd = new List<int> { -59, -50, -45, -40, -35, -30, -25, -20, -15, -10, -5 };
+
+                    foreach (var minute in minutesToAdd)
+                    {
+                        // Add the dummy data points for each specified minute with the drink's initial price
+                        drinkDataPoints[drink.Name].Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(minute)), (double)drink.CurrentPrice));
+                    }
                 }
+
                 var queue = drinkDataPoints[drink.Name];
                 queue.Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now), (double)drink.CurrentPrice));
+
                 var oneHourAgo = OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(-60));
                 while (queue.Any() && queue.Peek().X < oneHourAgo)
                 {
@@ -129,12 +139,11 @@ namespace beursfuif
 
                 plotModel.Series.Add(lineSeries);
             }
+
             var dateTimeAxis = (DateTimeAxis)plotModel.Axes.FirstOrDefault(a => a is DateTimeAxis);
             if (dateTimeAxis != null)
             {
- 
                 dateTimeAxis.Maximum = OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now);
-
                 var lastDataPointTime = drinkDataPoints.Values.SelectMany(q => q).Max(dp => dp.X);
                 dateTimeAxis.Minimum = lastDataPointTime - TimeSpan.FromMinutes(60).TotalDays;
             }
