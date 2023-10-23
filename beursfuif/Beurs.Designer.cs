@@ -54,7 +54,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Beurs";
             Text = "Beurs";
-            this.Resize += new System.EventHandler(this.Beurs_Resize); // Attach the Resize event handler
+            this.Resize += new System.EventHandler(this.Beurs_Resize); 
             ResumeLayout(false);
         }
 

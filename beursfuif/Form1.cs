@@ -26,6 +26,7 @@ namespace beursfuif
         public event DrinksUpdatedEventHandler DrinksUpdated;
         List<Control> associatedControls = new List<Control>();
         private List<Drink> drinks = new List<Drink>();
+        public event Action<Drink, string> DrinkChanged;
         private Dictionary<Drink, int> orderedDrinks = new Dictionary<Drink, int>();
         public bool DeleteModeEnabled { get; set; } = false;
         public event DrinkAddedEventHandler DrinkAdded;
@@ -164,6 +165,7 @@ namespace beursfuif
             Button drinkButton = CreateDrinkButton(newDrink, drinks.Count + 1);
             flowLayoutPanel.Controls.Add(drinkButton);
             drinks.Add(newDrink);
+            DrinkChanged?.Invoke(newDrink, "Add");
             SaveDrinksToFile();
             RefreshDrinkLayout();
         }
@@ -172,8 +174,6 @@ namespace beursfuif
             public bool Selected { get; set; } = false;
             public bool DeleteModeEnabled { get; set; } = false;
             public Drink AssociatedDrink { get; set; }
-
-
             protected override void OnClick(EventArgs e)
             {
                 base.OnClick(e);
@@ -287,6 +287,7 @@ namespace beursfuif
                     if (btn.AssociatedDrink != null)
                     {
                         drinks.Remove(btn.AssociatedDrink);
+                        DrinkChanged?.Invoke(btn.AssociatedDrink, "Delete");
                     }
                     flowLayoutPanel.Controls.Remove(btn);
                     btn.Dispose();  // Dispose of the button after removing
@@ -589,6 +590,8 @@ namespace beursfuif
             }
             foreach (var drink in drinks)
             {
+                decimal originalPrice = drink.CurrentPrice; 
+
                 if (drink.CurrentAmountPurchased > drink.Threshold)
                 {
                     var priceIncrease = drink.PriceInterval * (RandomChance() ? 2 : 1);
@@ -599,6 +602,12 @@ namespace beursfuif
                     drink.CurrentPrice -= drink.PriceInterval;
                 }
                 drink.CurrentPrice = Math.Max(drink.MinPrice, Math.Min(drink.CurrentPrice, drink.MaxPrice));
+
+                if (originalPrice != drink.CurrentPrice) 
+                {
+                    DrinkChanged?.Invoke(drink, "Update");
+                }
+
                 drink.CurrentAmountPurchased = 0;
             }
             DrinksUpdated?.Invoke(drinks);

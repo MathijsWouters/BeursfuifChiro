@@ -1,1 +1,1 @@
-[{"Name":"cola","Color":"Maroon","MinPrice":2.0,"MaxPrice":4.0,"PriceInterval":0.25,"RecentPurchaseCount":0,"Threshold":6,"CurrentPrice":3.0,"CurrentAmountPurchased":0}]
+[{"Name":"cola","Color":"Maroon","MinPrice":2.0,"MaxPrice":4.0,"PriceInterval":0.25,"RecentPurchaseCount":0,"Threshold":6,"CurrentPrice":3.0,"CurrentAmountPurchased":0},{"Name":"Banaan","Color":"Black","MinPrice":0.0,"MaxPrice":1.0,"PriceInterval":0.25,"RecentPurchaseCount":0,"Threshold":3,"CurrentPrice":0.5,"CurrentAmountPurchased":0}]
