@@ -21,6 +21,7 @@ namespace beursfuif
     {
         private PlotModel plotModel;
         private Dictionary<string, Queue<DataPoint>> drinkDataPoints = new Dictionary<string, Queue<DataPoint>>();
+        private FlowLayoutPanel drinksPanel;
         private const int MAX_DATAPOINTS = 12;
         private OxyColor ConvertToOxyColor(System.Drawing.Color color)
         {
@@ -31,6 +32,7 @@ namespace beursfuif
         {
             InitializeComponent();
             mainForm.DrinksUpdated += MainForm_DrinksUpdated;
+            mainForm.DrinkChanged += MainForm_DrinkChanged;
             this.Text = "Secondary Window";
             this.BackColor = System.Drawing.Color.Black;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -78,6 +80,15 @@ namespace beursfuif
             plotModel.Axes.Add(valueAxis);
             Beursgraph.Model = plotModel;
             UpdateChart(initialDrinks);
+
+            drinksPanel = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Bottom,
+                Height = (int)(this.Height * 0.2),
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink
+            };
+            this.Controls.Add(drinksPanel);
         }
        
         private void MainForm_DrinksUpdated(List<Drink> updatedDrinks)
@@ -122,7 +133,76 @@ namespace beursfuif
 
             plotModel.InvalidatePlot(true);
         }
+        private void MainForm_DrinkChanged(Drink drink, string actionType)
+        {
+            switch (actionType)
+            {
+                case "Add":
+                    AddDrinkButton(drink);
+                    break;
+                case "Delete":
+                    RemoveDrinkButton(drink);
+                    break;
+                case "Update":
+                    UpdateDrinkButton(drink);
+                    break;
+            }
+        }
+        private void AddDrinkButton(Drink drink)
+        {
+            Button btn = new Button();
+            btn.Text = $"{drink.Name} - {drink.CurrentPrice:C}"; 
+            btn.BackColor = drink.Color;
+            btn.Width = 200;  // Adjusted size
+            btn.Height = 75;  // Adjusted size
+            btn.Font = new System.Drawing.Font(btn.Font.FontFamily, btn.Font.Size, System.Drawing.FontStyle.Bold);
+            btn.TextAlign = ContentAlignment.MiddleCenter; 
+            btn.Click += (s, e) => { };
 
+            drinksPanel.Controls.Add(btn);
+            CenterButtonsInPanel(); 
+        }
 
+        private void RemoveDrinkButton(Drink drink)
+        {
+            Button btnToRemove = drinksPanel.Controls
+                .OfType<Button>()
+                .FirstOrDefault(btn => btn.Text.StartsWith(drink.Name)); 
+
+            if (btnToRemove != null)
+            {
+                drinksPanel.Controls.Remove(btnToRemove);
+                btnToRemove.Dispose();
+            }
+
+            CenterButtonsInPanel(); 
+        }
+
+        private void UpdateDrinkButton(Drink drink)
+        {
+            Button btnToUpdate = drinksPanel.Controls
+                .OfType<Button>()
+                .FirstOrDefault(btn => btn.Text.StartsWith(drink.Name)); 
+
+            if (btnToUpdate != null)
+            {
+                btnToUpdate.BackColor = drink.Color;
+                btnToUpdate.Text = $"{drink.Name} - {drink.CurrentPrice:C}"; 
+            }
+        }
+        private void CenterButtonsInPanel()
+        {
+
+            int totalButtonWidth = drinksPanel.Controls.OfType<Button>().Sum(b => b.Width);
+            int totalSpacing = drinksPanel.Width - totalButtonWidth;
+            int spacingPerButton = totalSpacing / (drinksPanel.Controls.Count + 1);
+
+            int currentPosition = spacingPerButton;
+            foreach (System.Windows.Forms.Control btn in drinksPanel.Controls)
+            {
+                btn.Left = currentPosition;
+                currentPosition += btn.Width + spacingPerButton;
+            }
+        }
     }
 }

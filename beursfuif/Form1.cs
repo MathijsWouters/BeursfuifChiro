@@ -151,7 +151,7 @@ namespace beursfuif
         }
         private void OpenBeursButton_Click(object sender, EventArgs e)
         {
-            var beursForm = new Beurs(drinks, this); 
+            var beursForm = new Beurs(drinks, this);
             beursForm.Show();
         }
         private void AddDrinksButton_Click(object sender, EventArgs e)
@@ -590,7 +590,7 @@ namespace beursfuif
             }
             foreach (var drink in drinks)
             {
-                decimal originalPrice = drink.CurrentPrice; 
+                decimal originalPrice = drink.CurrentPrice;
 
                 if (drink.CurrentAmountPurchased > drink.Threshold)
                 {
@@ -603,7 +603,7 @@ namespace beursfuif
                 }
                 drink.CurrentPrice = Math.Max(drink.MinPrice, Math.Min(drink.CurrentPrice, drink.MaxPrice));
 
-                if (originalPrice != drink.CurrentPrice) 
+                if (originalPrice != drink.CurrentPrice)
                 {
                     DrinkChanged?.Invoke(drink, "Update");
                 }
@@ -736,8 +736,6 @@ namespace beursfuif
         }
         private Drink GetDrinkByName(string drinkName)
         {
-            // Assuming you have a list or collection of all drinks somewhere in your code.
-            // This will retrieve the first match. If no match is found, it returns null.
             return drinks.FirstOrDefault(d => d.Name == drinkName);
         }
         private void CrashPrices()
@@ -746,7 +744,6 @@ namespace beursfuif
             {
                 drink.CurrentPrice = drink.MinPrice;
             }
-
             RefreshDrinkLayout();
         }
 
@@ -788,7 +785,7 @@ namespace beursfuif
             {
                 drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2 + drink.PriceInterval;
             }
-            RefreshDrinkLayout(); 
+            RefreshDrinkLayout();
         }
     }
 }
