@@ -486,7 +486,7 @@ namespace beursfuif
                 foreach (string order in reciptDrinkListBox.Items)
                 {
                     if (!order.Contains(" x ") || !order.Contains("="))
-                        continue;  // Skip processing for this item
+                        continue; 
 
                     string[] parts = order.Split(new[] { " x " }, StringSplitOptions.None);
                     if (parts.Length == 2)
@@ -495,11 +495,16 @@ namespace beursfuif
                         int quantity;
                         if (int.TryParse(parts[1].Split('=')[0].Trim(), out quantity))
                         {
+                            var drinkToUpdate = drinks.FirstOrDefault(d => d.Name == drinkName);
+                            if (drinkToUpdate != null)
+                            {
+                                drinkToUpdate.CurrentAmountPurchased += quantity;
+                            }
                             string checkQuery = $"SELECT COUNT(*) FROM DrinksSold WHERE DrinkName = '{drinkName}'";
                             using (SQLiteCommand cmdCheck = new SQLiteCommand(checkQuery, connection))
                             {
                                 int count = Convert.ToInt32(cmdCheck.ExecuteScalar());
-                                if (count == 0) // Drink does not exist in the table
+                                if (count == 0) 
                                 {
                                     string insertQuery = $"INSERT INTO DrinksSold (DrinkName, QuantitySold) VALUES ('{drinkName}', {quantity})";
                                     using (SQLiteCommand cmdInsert = new SQLiteCommand(insertQuery, connection))
@@ -507,7 +512,7 @@ namespace beursfuif
                                         cmdInsert.ExecuteNonQuery();
                                     }
                                 }
-                                else // Drink exists, just update its quantity
+                                else 
                                 {
                                     string updateQuery = $"UPDATE DrinksSold SET QuantitySold = QuantitySold + {quantity} WHERE DrinkName = '{drinkName}'";
                                     using (SQLiteCommand cmdUpdate = new SQLiteCommand(updateQuery, connection))
@@ -522,11 +527,10 @@ namespace beursfuif
                 string totalString = lblTotal.Text.Replace("Total: ", "").Replace("€", "").Trim();
                 if (double.TryParse(totalString, out totalIncome))
                 {
-                    // Successfully parsed total income from the label
+
                 }
                 else
                 {
-                    // Failed to parse the total from the label, handle this case (e.g., set totalIncome to 0 or log an error)
                     totalIncome = 0;
                 }
 
@@ -534,7 +538,7 @@ namespace beursfuif
                 using (SQLiteCommand cmdCheckIncome = new SQLiteCommand(checkIncomeQuery, connection))
                 {
                     int count = Convert.ToInt32(cmdCheckIncome.ExecuteScalar());
-                    if (count == 0) // If no row exists
+                    if (count == 0) 
                     {
                         string incomeQuery = $"INSERT INTO TotalIncome (Inkomsten) VALUES ({totalIncome})";
                         using (SQLiteCommand cmdInsert = new SQLiteCommand(incomeQuery, connection))
@@ -542,7 +546,7 @@ namespace beursfuif
                             cmdInsert.ExecuteNonQuery();
                         }
                     }
-                    else // Update the existing total
+                    else 
                     {
                         string formattedIncome = totalIncome.ToString(CultureInfo.InvariantCulture);
                         string incomeQuery = $"UPDATE TotalIncome SET Inkomsten = Inkomsten + {formattedIncome}";
@@ -743,8 +747,10 @@ namespace beursfuif
             foreach (var drink in drinks)
             {
                 drink.CurrentPrice = drink.MinPrice;
+                DrinkChanged?.Invoke(drink, "Update");
             }
             RefreshDrinkLayout();
+
         }
 
         private void CrashButton_Click(object sender, EventArgs e)

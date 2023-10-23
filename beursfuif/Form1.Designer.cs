@@ -41,7 +41,6 @@ namespace beursfuif
             minimizeButton = new Button();
             maximizeButton = new Button();
             titleLabel = new Label();
-            dragAreaPanel = new Panel();
             flowLayoutPanel = new FlowLayoutPanel();
             lblTotal = new Label();
             lblVakjes = new Label();
@@ -65,12 +64,14 @@ namespace beursfuif
             titleBarPanel.Controls.Add(minimizeButton);
             titleBarPanel.Controls.Add(maximizeButton);
             titleBarPanel.Controls.Add(titleLabel);
-            titleBarPanel.Controls.Add(dragAreaPanel);
             titleBarPanel.Dock = DockStyle.Top;
             titleBarPanel.Location = new Point(0, 0);
             titleBarPanel.Name = "titleBarPanel";
             titleBarPanel.Size = new Size(1689, 30);
             titleBarPanel.TabIndex = 0;
+            titleBarPanel.MouseDown += titleBarPanel_MouseDown;
+            titleBarPanel.MouseMove += titleBarPanel_MouseMove;
+            titleBarPanel.MouseUp += titleBarPanel_MouseUp;
             // 
             // stopfeest
             // 
@@ -173,16 +174,9 @@ namespace beursfuif
             titleLabel.TabIndex = 3;
             titleLabel.Text = "Beursfuif";
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // dragAreaPanel
-            // 
-            dragAreaPanel.Location = new Point(0, 0);
-            dragAreaPanel.Name = "dragAreaPanel";
-            dragAreaPanel.Size = new Size(200, 100);
-            dragAreaPanel.TabIndex = 7;
-            dragAreaPanel.MouseDown += titleBarPanel_MouseDown;
-            dragAreaPanel.MouseMove += titleBarPanel_MouseMove;
-            dragAreaPanel.MouseUp += titleBarPanel_MouseUp;
+            titleLabel.MouseDown += titleBarPanel_MouseDown;
+            titleLabel.MouseMove += titleBarPanel_MouseMove;
+            titleLabel.MouseUp += titleBarPanel_MouseUp;
             // 
             // flowLayoutPanel
             // 
@@ -281,6 +275,5 @@ namespace beursfuif
         private Button startTimerButton;
         private Button stopfeest;
         private Button CrashButton;
-        private Panel dragAreaPanel;
     }
 }

@@ -89,6 +89,10 @@ namespace beursfuif
                 AutoSizeMode = AutoSizeMode.GrowAndShrink
             };
             this.Controls.Add(drinksPanel);
+            foreach (var drink in initialDrinks)
+            {
+                AddDrinkButton(drink);
+            }
         }
        
         private void MainForm_DrinksUpdated(List<Drink> updatedDrinks)
@@ -112,12 +116,13 @@ namespace beursfuif
                 }
                 var queue = drinkDataPoints[drink.Name];
                 queue.Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now), (double)drink.CurrentPrice));
-                while (queue.Count > MAX_DATAPOINTS)
+                var oneHourAgo = OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(-60));
+                while (queue.Any() && queue.Peek().X < oneHourAgo)
                 {
                     queue.Dequeue();
                 }
 
-                foreach (var dataPoint in queue)
+                foreach (var dataPoint in queue.Where(dp => dp.X >= oneHourAgo))
                 {
                     lineSeries.Points.Add(dataPoint);
                 }
@@ -127,8 +132,11 @@ namespace beursfuif
             var dateTimeAxis = (DateTimeAxis)plotModel.Axes.FirstOrDefault(a => a is DateTimeAxis);
             if (dateTimeAxis != null)
             {
+ 
                 dateTimeAxis.Maximum = OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now);
-                dateTimeAxis.Minimum = OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(-60));
+
+                var lastDataPointTime = drinkDataPoints.Values.SelectMany(q => q).Max(dp => dp.X);
+                dateTimeAxis.Minimum = lastDataPointTime - TimeSpan.FromMinutes(60).TotalDays;
             }
 
             plotModel.InvalidatePlot(true);
@@ -151,12 +159,13 @@ namespace beursfuif
         private void AddDrinkButton(Drink drink)
         {
             Button btn = new Button();
-            btn.Text = $"{drink.Name} - {drink.CurrentPrice:C}"; 
+            btn.Text = $"{drink.Name}\n{drink.CurrentPrice:C}"; 
             btn.BackColor = drink.Color;
-            btn.Width = 200;  // Adjusted size
-            btn.Height = 75;  // Adjusted size
-            btn.Font = new System.Drawing.Font(btn.Font.FontFamily, btn.Font.Size, System.Drawing.FontStyle.Bold);
-            btn.TextAlign = ContentAlignment.MiddleCenter; 
+            btn.Width = 190;  // Adjusted size
+            btn.Height = 150;  // Adjusted size
+            btn.Font = new System.Drawing.Font(btn.Font.FontFamily, 20, System.Drawing.FontStyle.Bold);
+            btn.TextAlign = ContentAlignment.MiddleCenter;
+            btn.Margin = new Padding(10);
             btn.Click += (s, e) => { };
 
             drinksPanel.Controls.Add(btn);
@@ -187,7 +196,7 @@ namespace beursfuif
             if (btnToUpdate != null)
             {
                 btnToUpdate.BackColor = drink.Color;
-                btnToUpdate.Text = $"{drink.Name} - {drink.CurrentPrice:C}"; 
+                btnToUpdate.Text = $"{drink.Name}\n{drink.CurrentPrice:C}"; 
             }
         }
         private void CenterButtonsInPanel()
