@@ -61,7 +61,7 @@
         #endregion
         private void Beurs_Resize(object sender, EventArgs e)
         {
-            Beursgraph.Width = this.ClientSize.Width; 
+            Beursgraph.Width = (int)(this.ClientSize.Width * 0.97);
             Beursgraph.Height = (int)(this.ClientSize.Height * 0.8); 
             Beursgraph.Top = 0; 
         }

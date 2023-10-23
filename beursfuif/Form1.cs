@@ -57,7 +57,7 @@ namespace beursfuif
 
             lblTotal.Font = new Font(lblTotal.Font.FontFamily, lblTotal.Font.Size + 4, FontStyle.Bold);
             lblVakjes.Font = new Font(lblVakjes.Font.FontFamily, lblVakjes.Font.Size + 4, FontStyle.Bold);
-            priceUpdateTimer.Interval = 3000;
+            priceUpdateTimer.Interval = 300000;
             priceUpdateTimer.Tick += PriceUpdateTimer_Tick;
             partyModeTimer.Interval = 500;
             partyModeTimer.Tick += PartyModeTimer_Tick;
@@ -753,6 +753,7 @@ namespace beursfuif
                 drink.CurrentPrice = drink.MinPrice;
                 DrinkChanged?.Invoke(drink, "Update");
             }
+            DrinksUpdated?.Invoke(drinks);
             RefreshDrinkLayout();
 
         }
@@ -795,6 +796,7 @@ namespace beursfuif
             {
                 drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2 + drink.PriceInterval;
             }
+            DrinksUpdated?.Invoke(drinks);
             RefreshDrinkLayout();
         }
     }

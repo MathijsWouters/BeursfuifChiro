@@ -39,7 +39,7 @@ namespace beursfuif
             this.WindowState = FormWindowState.Maximized;
             plotModel = new PlotModel
             {
-                Title = "Beurs Live Chart",
+                Title = "Beursfuif",
                 TitleFontSize = 36,
                 Background = OxyColors.Black,
                 TextColor = OxyColors.White 
@@ -115,14 +115,16 @@ namespace beursfuif
                 {
                     drinkDataPoints[drink.Name] = new Queue<DataPoint>(MAX_DATAPOINTS);
                     var minutesToAdd = new List<int> { -59, -50, -45, -40, -35, -30, -25, -20, -15, -10, -5 };
+                    Random rand = new Random();
 
                     foreach (var minute in minutesToAdd)
                     {
-                        // Add the dummy data points for each specified minute with the drink's initial price
-                        drinkDataPoints[drink.Name].Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(minute)), (double)drink.CurrentPrice));
+                        int randomNumber = rand.Next(-3, 4);  
+                        decimal priceAdjustment = drink.PriceInterval * randomNumber;
+
+                        drinkDataPoints[drink.Name].Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(minute)), (double)(drink.CurrentPrice + priceAdjustment)));
                     }
                 }
-
                 var queue = drinkDataPoints[drink.Name];
                 queue.Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now), (double)drink.CurrentPrice));
 
