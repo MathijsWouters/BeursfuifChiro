@@ -65,7 +65,10 @@ namespace beursfuif
         private void Form1_Load(object sender, EventArgs e)
         {
             this.KeyDown += Form1_KeyDown;
-            string databaseFileName = "DrinksDB.db";
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string appFolderPath = Path.Combine(appDataPath, "Beursfuif");
+            Directory.CreateDirectory(appFolderPath);
+            string databaseFileName = Path.Combine(appFolderPath, "DrinksDB.db");
             string connectionString = $"Data Source={databaseFileName};Version=3;";
 
             try
@@ -94,6 +97,7 @@ namespace beursfuif
                         }
                     }
                 }
+                string jsonFileName = Path.Combine(appFolderPath, "drinksData.json");
                 if (File.Exists("drinksData.json"))
                 {
                     string json = File.ReadAllText("drinksData.json");
@@ -111,7 +115,6 @@ namespace beursfuif
             }
             timer1.Interval = 1000;
             timer1.Tick += Timer1_Tick;
-
             PositionLabels();
             PositionTimerLabel();
         }
@@ -141,7 +144,6 @@ namespace beursfuif
         private void minimizeButton_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
-            
         }
         private void maximizeButton_Click(object sender, EventArgs e)
         {
@@ -178,41 +180,32 @@ namespace beursfuif
             protected override void OnClick(EventArgs e)
             {
                 base.OnClick(e);
-                if (DeleteModeEnabled) // global variable to check if delete mode is on
+                if (DeleteModeEnabled) 
                 {
                     Selected = !Selected;
-                    this.BackColor = Selected ? Color.Red : Color.FromArgb(45, 45, 48); // change color if selected
+                    this.BackColor = Selected ? Color.Red : Color.FromArgb(45, 45, 48); 
                 }
             }
-            public Color LeftColor { get; set; } = Color.Blue; // Default color
-            public Color RightColor { get; set; } = Color.FromArgb(30, 0, 0, 0); // Black tint
+            public Color LeftColor { get; set; } = Color.Blue; 
+            public Color RightColor { get; set; } = Color.FromArgb(30, 0, 0, 0); 
             protected override void OnPaint(PaintEventArgs pevent)
             {
-                // Clear everything to draw manually
                 pevent.Graphics.Clear(this.BackColor);
-
-                // Draw the left color
                 using (SolidBrush brush = new SolidBrush(LeftColor))
                 {
                     pevent.Graphics.FillRectangle(brush, 0, 0, this.Width / 5, this.Height);
                 }
-
-                // Draw the background for the remaining 4/5 of the button
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(30, 0, 0, 0))) // Slightly transparent black
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(30, 0, 0, 0))) 
                 {
                     pevent.Graphics.FillRectangle(brush, this.Width / 5, 0, 4 * this.Width / 5, this.Height);
                 }
-
-                // Split the text to render different parts separately
                 string[] textLines = this.Text.Split('\n');
                 if (textLines.Length >= 3)
                 {
                     Rectangle numberRect = new Rectangle((int)(this.Width * 0.25), (int)(this.Height / 4), (int)(this.Width * 0.25), (int)(this.Height / 2));
                     Rectangle nameRect = new Rectangle((int)(this.Width / 5), (int)(this.Height / 4), (int)(4 * this.Width / 5), (int)(this.Height / 2));
                     Rectangle priceRect = new Rectangle(0, (int)(this.Height - 30), this.Width - 5, 25);
-
-                    // Draw slightly less black rectangle for the number
-                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, 0, 0, 0))) // Adjust transparency as needed
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, 0, 0, 0))) 
                     {
                         pevent.Graphics.FillRectangle(brush, numberRect);
                     }
@@ -223,9 +216,7 @@ namespace beursfuif
                     TextRenderer.DrawText(pevent.Graphics, textLines[1], nameFont, nameRect, this.ForeColor, TextFormatFlags.Right | TextFormatFlags.VerticalCenter);
                     TextRenderer.DrawText(pevent.Graphics, textLines[2], this.Font, priceRect, this.ForeColor, TextFormatFlags.Right | TextFormatFlags.Bottom);
                 }
-
-                // Draw the border
-                using (Pen pen = new Pen(Color.White, 3)) // 3 for thicker border
+                using (Pen pen = new Pen(Color.White, 3)) 
                 {
                     pevent.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
                 }
@@ -248,7 +239,7 @@ namespace beursfuif
             {
                 var btn = s as CustomButton;
 
-                if (btn == null) // Just to be safe
+                if (btn == null) 
                     return;
                 if (DeleteModeEnabled)
                 {
@@ -281,7 +272,6 @@ namespace beursfuif
 
             if (DeleteModeEnabled)
             {
-                // Handle the deletion
                 var drinksToDelete = flowLayoutPanel.Controls.OfType<CustomButton>().Where(b => b.Selected).ToList();
                 foreach (var btn in drinksToDelete)
                 {
@@ -291,17 +281,14 @@ namespace beursfuif
                         DrinkChanged?.Invoke(btn.AssociatedDrink, "Delete");
                     }
                     flowLayoutPanel.Controls.Remove(btn);
-                    btn.Dispose();  // Dispose of the button after removing
+                    btn.Dispose(); 
                 }
                 RefreshDrinkLayout();
                 SaveDrinksToFile();
             }
-
-            // Toggle the delete mode after handling deletions (if applicable)
             DeleteModeEnabled = !DeleteModeEnabled;
             deleteDrinksButton.Text = DeleteModeEnabled ? "Confirm Deletion" : "Delete Drinks";
         }
-
         private void RefreshDrinkLayout()
         {
             int counter = 1;
@@ -310,14 +297,11 @@ namespace beursfuif
                 string[] lines = control.Text.Split('\n');
                 if (lines.Length > 1)
                 {
-                    string drinkName = lines[1].Trim();  // Assuming the name is on the second line
-
-                    // Find the corresponding drink based on the name
+                    string drinkName = lines[1].Trim();
                     Drink correspondingDrink = drinks.FirstOrDefault(d => d.Name == drinkName);
-
                     if (correspondingDrink != null)
                     {
-                        string updatedPriceText = $"{correspondingDrink.CurrentPrice:C2}"; // Convert to currency format
+                        string updatedPriceText = $"{correspondingDrink.CurrentPrice:C2}"; 
                         control.Text = $"{counter}\n{drinkName}\n{updatedPriceText}";
                     }
                 }
@@ -329,8 +313,15 @@ namespace beursfuif
         {
             try
             {
+                string appFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Beursfuif");
+                if (!Directory.Exists(appFolderPath))
+                {
+                    Directory.CreateDirectory(appFolderPath);
+                }
+                string jsonFileName = Path.Combine(appFolderPath, "drinksData.json");
+
                 string json = JsonConvert.SerializeObject(drinks);
-                File.WriteAllText("drinksData.json", json);
+                File.WriteAllText(jsonFileName, json);
             }
             catch (Exception ex)
             {
@@ -394,13 +385,11 @@ namespace beursfuif
         }
         private CustomButton FindButtonWithNumber(int number)
         {
-            // Iterate over all CustomButtons in the flowLayoutPanel and find the one with the correct number
             foreach (Control ctrl in flowLayoutPanel.Controls)
             {
                 if (ctrl is CustomButton)
                 {
                     CustomButton btn = (CustomButton)ctrl;
-                    // Get the first line of the button's text, which contains the drinkNumber
                     string firstLine = btn.Text.Split('\n').FirstOrDefault();
                     if (int.TryParse(firstLine, out int parsedNumber) && parsedNumber == number)
                     {
@@ -417,7 +406,7 @@ namespace beursfuif
         }
         private void AdjustListBoxPosition()
         {
-            int marginRight = 20; // Margin from the top and right edges
+            int marginRight = 20; 
             int marginTop = 65;
             reciptDrinkListBox.Location = new Point(this.ClientSize.Width - reciptDrinkListBox.Width - marginRight, marginTop);
             int padding = 10;
@@ -429,7 +418,7 @@ namespace beursfuif
         }
         private void RefreshOrderList()
         {
-            reciptDrinkListBox.Items.Clear();  // Clear current items
+            reciptDrinkListBox.Items.Clear();  
             decimal totalOrder = 0m;
             countdown = 10;
             UpdateTimerLabel();
@@ -478,11 +467,14 @@ namespace beursfuif
         }
         private void ClearDrinks()
         {
-            string databaseFileName = "DrinksDB.db";
-            string connectionString = $"Data Source={databaseFileName};Version=3;";
-
-            double totalIncome = 0; // Reset total income
-
+            string appFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Beursfuif");
+            if (!Directory.Exists(appFolderPath))
+            {
+                Directory.CreateDirectory(appFolderPath);
+            }
+            string databaseFilePath = Path.Combine(appFolderPath, "DrinksDB.db");
+            string connectionString = $"Data Source={databaseFilePath};Version=3;";
+            double totalIncome = 0; 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
