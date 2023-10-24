@@ -69,7 +69,7 @@ namespace beursfuif
             string appFolderPath = Path.Combine(appDataPath, "Beursfuif");
             Directory.CreateDirectory(appFolderPath);
             string databaseFileName = Path.Combine(appFolderPath, "DrinksDB.db");
-            string connectionString = $"Data Source={databaseFileName};Version=3;";
+            string connectionString = $"Data Source={databaseFileName};Version=3;Mode=ReadWrite";
 
             try
             {
@@ -473,7 +473,7 @@ namespace beursfuif
                 Directory.CreateDirectory(appFolderPath);
             }
             string databaseFilePath = Path.Combine(appFolderPath, "DrinksDB.db");
-            string connectionString = $"Data Source={databaseFilePath};Version=3;";
+            string connectionString = $"Data Source={databaseFilePath};Version=3;Mode=ReadWrite";
             double totalIncome = 0; 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
