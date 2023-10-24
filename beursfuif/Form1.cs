@@ -632,6 +632,11 @@ namespace beursfuif
         }
         private void StartTimerButton_Click(object sender, EventArgs e)
         {
+            if (!flowLayoutPanel.Controls.OfType<CustomButton>().Any())
+            {
+                MessageBox.Show("Voeg eens even snel drankjes toe anders gaat de beurs niet open hoor!", "Geen beurs zonder drinken", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             priceUpdateTimer.Start();
             startTimerButton.BackColor = Color.Green;
         }
@@ -786,7 +791,7 @@ namespace beursfuif
             {
                 CrashButton.BackColor = originalCrashButtonColor;
             }
-            isOriginalColor = !isOriginalColor; // Toggle the flag
+            isOriginalColor = !isOriginalColor; 
         }
         private Color GetRandomColor()
         {
@@ -795,9 +800,11 @@ namespace beursfuif
         }
         private void ResetPricesToAverage()
         {
+            Random rand = new Random();
             foreach (var drink in drinks)
             {
-                drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2 + drink.PriceInterval;
+                int randomMultiplier = rand.Next(-1, 3); 
+                drink.CurrentPrice = (drink.MinPrice + drink.MaxPrice) / 2 + (drink.PriceInterval * randomMultiplier);
             }
             DrinksUpdated?.Invoke(drinks);
             RefreshDrinkLayout();
