@@ -17,11 +17,13 @@ namespace beursfuif
         private double totalIncome = 0.0;
         private int countdown = 10;
         private Point lastLocation;
+        private Beurs beursForm;
         private ListBox reciptDrinkListBox;
         private FlowLayoutPanel flowLayoutPanel;
         private bool partyModeActive = false;
         private Color originalCrashButtonColor;
         private bool isOriginalColor = true;
+        private Stack<Drink> lastAddedDrinks = new Stack<Drink>();
         public delegate void DrinksUpdatedEventHandler(List<Drink> updatedDrinks);
         public event DrinksUpdatedEventHandler DrinksUpdated;
         List<Control> associatedControls = new List<Control>();
@@ -34,7 +36,6 @@ namespace beursfuif
         {
             InitializeComponent();
             this.Text = "Beursfuif";
-            // Form properties
             this.BackColor = Color.FromArgb(45, 45, 48);
             this.ForeColor = Color.White;
             this.WindowState = FormWindowState.Maximized;
@@ -70,17 +71,13 @@ namespace beursfuif
 
             try
             {
-                // Check if the SQLite database file exists
                 if (!File.Exists(databaseFileName))
                 {
-                    // Create a new SQLite database
                     SQLiteConnection.CreateFile(databaseFileName);
 
                     using (SQLiteConnection connection = new SQLiteConnection(connectionString))
                     {
                         connection.Open();
-
-                        // Create necessary tables
                         string createDrinksSoldTable = "CREATE TABLE DrinksSold (DrinkName TEXT, QuantitySold INTEGER)";
                         string createTotalIncomeTable = "CREATE TABLE TotalIncome (Inkomsten REAL)";
 
@@ -151,8 +148,19 @@ namespace beursfuif
         }
         private void OpenBeursButton_Click(object sender, EventArgs e)
         {
-            var beursForm = new Beurs(drinks, this);
-            beursForm.Show();
+            if (beursForm == null || beursForm.IsDisposed)
+            {
+                beursForm = new Beurs(drinks, this);
+                beursForm.Show();
+            }
+            else
+            {
+                if (beursForm.WindowState == FormWindowState.Minimized)
+                {
+                    beursForm.WindowState = FormWindowState.Maximized;
+                }
+                beursForm.BringToFront();
+            }
         }
         private void AddDrinksButton_Click(object sender, EventArgs e)
         {
@@ -411,11 +419,12 @@ namespace beursfuif
         }
         private void RefreshOrderList()
         {
-            reciptDrinkListBox.Items.Clear();  
+            reciptDrinkListBox.Items.Clear();
             decimal totalOrder = 0m;
             countdown = 10;
             UpdateTimerLabel();
             timer1.Start();
+            lastAddedDrinks.Clear();
 
             foreach (var order in orderedDrinks)
             {
@@ -424,10 +433,13 @@ namespace beursfuif
                 decimal total = drink.CurrentPrice * count;
                 totalOrder += total;
                 reciptDrinkListBox.Items.Add($"{drink.Name} x {count} = {total.ToString("F2")}€");
+
+                for (int i = 0; i < count; i++)
+                {
+                    lastAddedDrinks.Push(drink);
+                }
             }
-
             lblTotal.Text = $"Total: {totalOrder.ToString("F2")}€";
-
 
             int vakjes = (int)(totalOrder / 0.25m);
             lblVakjes.Text = $"Vakjes: {vakjes.ToString("F2")}";
@@ -677,61 +689,60 @@ namespace beursfuif
         }
         private void DeleteLastItem(object sender, EventArgs e)
         {
-            // Check if the listbox has items.
-            if (reciptDrinkListBox.Items.Count > 0)
+            if (lastAddedDrinks.Count > 0)
             {
-                string lastItem = reciptDrinkListBox.Items[reciptDrinkListBox.Items.Count - 1].ToString();
-                string[] parts = lastItem.Split(new[] { " x " }, StringSplitOptions.None);
-
-                if (parts.Length == 2)
+                Drink lastDrink = lastAddedDrinks.Pop();
+                for (int i = 0; i < reciptDrinkListBox.Items.Count; i++)
                 {
-                    string drinkNameString = parts[0].Trim();
-                    Drink drink = GetDrinkByName(drinkNameString);  // Fetch the Drink object
-                    double totalPriceForItem;
-                    int quantity;
+                    string listItem = reciptDrinkListBox.Items[i].ToString();
+                    string[] parts = listItem.Split(new[] { " x " }, StringSplitOptions.None);
 
-                    if (int.TryParse(parts[1].Split('=')[0].Trim(), out quantity)
-                        && double.TryParse(parts[1].Split('=')[1].Replace("€", "").Trim(), out totalPriceForItem))
+                    if (parts.Length == 2 && parts[0].Trim() == lastDrink.Name)
                     {
-                        double pricePerUnit = totalPriceForItem / quantity;
+                        string drinkNameString = parts[0].Trim();
+                        double totalPriceForItem;
+                        int quantity;
 
-                        string totalString = lblTotal.Text.Replace("Total: ", "").Replace("€", "").Trim();
-                        if (double.TryParse(totalString, out double totalOrder))
+                        if (int.TryParse(parts[1].Split('=')[0].Trim(), out quantity)
+                            && double.TryParse(parts[1].Split('=')[1].Replace("€", "").Trim(), out totalPriceForItem))
                         {
-                            totalOrder -= pricePerUnit;
-                            lblTotal.Text = $"Total: {totalOrder.ToString("F2")}€";
-                        }
-                        if (quantity > 1)
-                        {
-                            quantity--;
-                            reciptDrinkListBox.Items[reciptDrinkListBox.Items.Count - 1] = $"{drinkNameString} x {quantity} = {(pricePerUnit * quantity).ToString("F2")}€";
+                            double pricePerUnit = totalPriceForItem / quantity;
+                            string totalString = lblTotal.Text.Replace("Total: ", "").Replace("€", "").Trim();
 
-                            // Update the dictionary using the Drink object
-                            if (orderedDrinks.ContainsKey(drink))
+                            if (double.TryParse(totalString, out double totalOrder))
                             {
-                                orderedDrinks[drink] = quantity;
+                                totalOrder -= pricePerUnit;
+                                lblTotal.Text = $"Total: {totalOrder.ToString("F2")}€";
                             }
-                        }
-                        else
-                        {
-                            reciptDrinkListBox.Items.RemoveAt(reciptDrinkListBox.Items.Count - 1);
 
-                            // Remove the drink from the dictionary using the Drink object
-                            if (orderedDrinks.ContainsKey(drink))
+                            if (quantity > 1)
                             {
-                                orderedDrinks.Remove(drink);
+                                quantity--;
+                                reciptDrinkListBox.Items[i] = $"{drinkNameString} x {quantity} = {(pricePerUnit * quantity).ToString("F2")}€";
+                                if (orderedDrinks.ContainsKey(lastDrink))
+                                {
+                                    orderedDrinks[lastDrink] = quantity;
+                                }
                             }
+                            else
+                            {
+                                reciptDrinkListBox.Items.RemoveAt(i);
+                                if (orderedDrinks.ContainsKey(lastDrink))
+                                {
+                                    orderedDrinks.Remove(lastDrink);
+                                }
+                            }
+
+                            int vakjes = (int)(totalOrder / 0.25);
+                            lblVakjes.Text = $"Vakjes: {vakjes}";
                         }
-                        // Update vakjes
-                        int vakjes = (int)(totalOrder / 0.25);
-                        lblVakjes.Text = $"Vakjes: {vakjes}";
+                        break;
                     }
                 }
+                timer1.Stop();  
+                countdown = 10; 
+                UpdateTimerLabel();
             }
-        }
-        private Drink GetDrinkByName(string drinkName)
-        {
-            return drinks.FirstOrDefault(d => d.Name == drinkName);
         }
         private void CrashPrices()
         {

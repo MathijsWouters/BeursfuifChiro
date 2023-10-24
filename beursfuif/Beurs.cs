@@ -37,6 +37,7 @@ namespace beursfuif
             this.BackColor = System.Drawing.Color.Black;
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
+            this.KeyPreview = true;
             plotModel = new PlotModel
             {
                 Title = "Beursfuif",
@@ -119,7 +120,7 @@ namespace beursfuif
 
                     foreach (var minute in minutesToAdd)
                     {
-                        int randomNumber = rand.Next(-1, 2);  
+                        int randomNumber = rand.Next(-2, 3);  
                         decimal priceAdjustment = drink.PriceInterval * randomNumber;
 
                         drinkDataPoints[drink.Name].Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(minute)), (double)(drink.CurrentPrice + priceAdjustment)));
@@ -172,8 +173,8 @@ namespace beursfuif
             Button btn = new Button();
             btn.Text = $"{drink.Name}\n{drink.CurrentPrice:C}"; 
             btn.BackColor = drink.Color;
-            btn.Width = 190;  // Adjusted size
-            btn.Height = 150;  // Adjusted size
+            btn.Width = 190; 
+            btn.Height = 150;  
             btn.Font = new System.Drawing.Font(btn.Font.FontFamily, 20, System.Drawing.FontStyle.Bold);
             btn.TextAlign = ContentAlignment.MiddleCenter;
             btn.Margin = new Padding(10);
@@ -222,6 +223,14 @@ namespace beursfuif
             {
                 btn.Left = currentPosition;
                 currentPosition += btn.Width + spacingPerButton;
+            }
+        }
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.WindowState = FormWindowState.Minimized; 
             }
         }
     }
