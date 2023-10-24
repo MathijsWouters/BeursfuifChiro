@@ -222,7 +222,7 @@ namespace beursfuif
         private CustomButton CreateDrinkButton(Drink drink, int drinkNumber)
         {
             CustomButton drinkButton = new CustomButton();
-            drinkButton.Width = 250;
+            drinkButton.Width = 300;
             drinkButton.Height = 95;
             drinkButton.LeftColor = drink.Color;  // Assigning the drink's color to LeftColor
             drinkButton.Margin = new Padding(20);
@@ -582,12 +582,12 @@ namespace beursfuif
 
                 if (drink.CurrentAmountPurchased > drink.Threshold)
                 {
-                    var priceIncrease = drink.PriceInterval * (RandomChance() ? 2 : 1);
+                    var priceIncrease = drink.PriceInterval * RandomChance();
                     drink.CurrentPrice += priceIncrease;
                 }
                 else
                 {
-                    drink.CurrentPrice -= drink.PriceInterval;
+                    drink.CurrentPrice -= drink.PriceInterval * RandomChance();
                 }
                 drink.CurrentPrice = Math.Max(drink.MinPrice, Math.Min(drink.CurrentPrice, drink.MaxPrice));
 
@@ -601,10 +601,17 @@ namespace beursfuif
             DrinksUpdated?.Invoke(drinks);
             RefreshDrinkLayout();
         }
-        private bool RandomChance()
+        private int RandomChance()
         {
             Random rand = new Random();
-            return rand.NextDouble() > 0.7;
+            double randomValue = rand.NextDouble();
+
+            if (randomValue < 0.3333)
+                return 0;
+            else if (randomValue < 0.6666)
+                return 1;
+            else
+                return 2;
         }
         private void StartTimerButton_Click(object sender, EventArgs e)
         {

@@ -183,7 +183,7 @@ namespace beursfuif
             flowLayoutPanel.Location = new Point(0, 56);
             flowLayoutPanel.Name = "flowLayoutPanel";
             flowLayoutPanel.Padding = new Padding(10);
-            flowLayoutPanel.Size = new Size(890, 405);
+            flowLayoutPanel.Size = new Size(1040, 405);
             flowLayoutPanel.TabIndex = 1;
             // 
             // lblTotal

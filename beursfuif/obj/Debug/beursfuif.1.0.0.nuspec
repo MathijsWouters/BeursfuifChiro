@@ -26,10 +26,10 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\beursfuif.runtimeconfig.json" target="lib\net6.0-windows7.0\beursfuif.runtimeconfig.json" />
-    <file src="C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\beursfuif.dll" target="lib\net6.0-windows7.0\beursfuif.dll" />
-    <file src="C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\logochiro_Mnd_icon.ico" target="content\logochiro_Mnd_icon.ico" />
-    <file src="C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\logochiro_Mnd_icon.ico" target="contentFiles\any\net6.0-windows7.0\logochiro_Mnd_icon.ico" />
-    <file src="C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\README.md" target="\README.md" />
+    <file src="C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\beursfuif.runtimeconfig.json" target="lib\net6.0-windows7.0\beursfuif.runtimeconfig.json" />
+    <file src="C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Debug\net6.0-windows\beursfuif.dll" target="lib\net6.0-windows7.0\beursfuif.dll" />
+    <file src="C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\logochiro_Mnd_icon.ico" target="content\logochiro_Mnd_icon.ico" />
+    <file src="C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\logochiro_Mnd_icon.ico" target="contentFiles\any\net6.0-windows7.0\logochiro_Mnd_icon.ico" />
+    <file src="C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\README.md" target="\README.md" />
   </files>
 </package>

@@ -119,7 +119,7 @@ namespace beursfuif
 
                     foreach (var minute in minutesToAdd)
                     {
-                        int randomNumber = rand.Next(-3, 4);  
+                        int randomNumber = rand.Next(-1, 2);  
                         decimal priceAdjustment = drink.PriceInterval * randomNumber;
 
                         drinkDataPoints[drink.Name].Enqueue(new DataPoint(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now.AddMinutes(minute)), (double)(drink.CurrentPrice + priceAdjustment)));
