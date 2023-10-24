@@ -65,10 +65,7 @@ namespace beursfuif
         private void Form1_Load(object sender, EventArgs e)
         {
             this.KeyDown += Form1_KeyDown;
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string appFolderPath = Path.Combine(appDataPath, "Beursfuif");
-            Directory.CreateDirectory(appFolderPath);
-            string databaseFileName = Path.Combine(appFolderPath, "DrinksDB.db");
+            string databaseFileName = "DrinksDB.db";
             string connectionString = $"Data Source={databaseFileName};Version=3;Mode=ReadWrite";
 
             try
@@ -97,10 +94,10 @@ namespace beursfuif
                         }
                     }
                 }
-                string jsonFileName = Path.Combine(appFolderPath, "drinksData.json");
+                string jsonFileName = "drinksData.json";
                 if (File.Exists("drinksData.json"))
                 {
-                    string json = File.ReadAllText("drinksData.json");
+                    string json = File.ReadAllText(jsonFileName);
                     drinks = JsonConvert.DeserializeObject<List<Drink>>(json);
                     for (int i = 0; i < drinks.Count; i++)
                     {
@@ -313,12 +310,7 @@ namespace beursfuif
         {
             try
             {
-                string appFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Beursfuif");
-                if (!Directory.Exists(appFolderPath))
-                {
-                    Directory.CreateDirectory(appFolderPath);
-                }
-                string jsonFileName = Path.Combine(appFolderPath, "drinksData.json");
+                string jsonFileName = "drinksData.json";  
 
                 string json = JsonConvert.SerializeObject(drinks);
                 File.WriteAllText(jsonFileName, json);
@@ -328,6 +320,7 @@ namespace beursfuif
                 MessageBox.Show($"An error occurred while saving: {ex.Message}");
             }
         }
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
@@ -407,7 +400,7 @@ namespace beursfuif
         private void AdjustListBoxPosition()
         {
             int marginRight = 20; 
-            int marginTop = 65;
+            int marginTop = 75;
             reciptDrinkListBox.Location = new Point(this.ClientSize.Width - reciptDrinkListBox.Width - marginRight, marginTop);
             int padding = 10;
             int lblTotalY = reciptDrinkListBox.Top + reciptDrinkListBox.Height + padding;
@@ -467,14 +460,9 @@ namespace beursfuif
         }
         private void ClearDrinks()
         {
-            string appFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Beursfuif");
-            if (!Directory.Exists(appFolderPath))
-            {
-                Directory.CreateDirectory(appFolderPath);
-            }
-            string databaseFilePath = Path.Combine(appFolderPath, "DrinksDB.db");
+            string databaseFilePath = "DrinksDB.db";
             string connectionString = $"Data Source={databaseFilePath};Version=3;Mode=ReadWrite";
-            double totalIncome = 0; 
+            double totalIncome = 0;
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
