@@ -148,6 +148,11 @@ namespace beursfuif
         }
         private void OpenBeursButton_Click(object sender, EventArgs e)
         {
+            if (!flowLayoutPanel.Controls.OfType<CustomButton>().Any())
+            {
+                MessageBox.Show("Voeg eens even snel drankjes toe anders gaat de beurs niet open hoor!", "Geen beurs zonder drinken", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (beursForm == null || beursForm.IsDisposed)
             {
                 beursForm = new Beurs(drinks, this);
