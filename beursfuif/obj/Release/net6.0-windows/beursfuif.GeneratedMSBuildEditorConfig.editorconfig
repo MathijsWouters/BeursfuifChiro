@@ -1,6 +1,6 @@
 is_global = true
 build_property.ApplicationManifest = 
-build_property.StartupObject = 
+build_property.StartupObject = beursfuif.Program
 build_property.ApplicationDefaultFont = 
 build_property.ApplicationHighDpiMode = 
 build_property.ApplicationUseCompatibleTextRendering = 
@@ -14,4 +14,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = beursfuif
-build_property.ProjectDir = C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\
+build_property.ProjectDir = C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\

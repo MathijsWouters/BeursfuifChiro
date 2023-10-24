@@ -1,43 +1,43 @@
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.exe
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.deps.json
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.runtimeconfig.json
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.pdb
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\ClosedXML.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\DocumentFormat.OpenXml.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\EntityFramework.SqlServer.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\EntityFramework.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\ExcelNumberFormat.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\Irony.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\Newtonsoft.Json.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\OxyPlot.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\OxyPlot.WindowsForms.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\SixLabors.Fonts.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\System.Data.SQLite.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\System.Data.SqlClient.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\System.Data.SQLite.EF6.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\XLParser.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-arm64\native\sni.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x64\native\sni.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x86\native\sni.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\linux-x64\native\SQLite.Interop.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\osx-x64\native\SQLite.Interop.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x64\native\SQLite.Interop.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x86\native\SQLite.Interop.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.AssemblyReference.cache
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.AddDrinksForm.resources
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.Beurs.resources
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.Form1.resources
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.GenerateResource.cache
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.AssemblyInfoInputs.cache
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.AssemblyInfo.cs
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.CoreCompileInputs.cache
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.CopyComplete
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\refint\beursfuif.dll
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.pdb
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.genruntimeconfig.cache
-C:\Users\Gebruiker\Documents\chiro\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\ref\beursfuif.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.exe
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.deps.json
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.runtimeconfig.json
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\beursfuif.pdb
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\ClosedXML.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\DocumentFormat.OpenXml.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\EntityFramework.SqlServer.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\EntityFramework.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\ExcelNumberFormat.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\Irony.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\Newtonsoft.Json.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\OxyPlot.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\OxyPlot.WindowsForms.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\SixLabors.Fonts.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\System.Data.SQLite.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\System.Data.SqlClient.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\System.Data.SQLite.EF6.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\XLParser.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\linux-x64\native\SQLite.Interop.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\osx-x64\native\SQLite.Interop.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x64\native\SQLite.Interop.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win-x86\native\SQLite.Interop.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\bin\Release\net6.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.AssemblyReference.cache
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.AddDrinksForm.resources
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.Beurs.resources
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.Form1.resources
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.GenerateResource.cache
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.AssemblyInfoInputs.cache
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.AssemblyInfo.cs
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.CoreCompileInputs.cache
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.csproj.CopyComplete
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\refint\beursfuif.dll
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.pdb
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\beursfuif.genruntimeconfig.cache
+C:\Users\mathi\OneDrive\Documenten\A1 chiro beursfuif\BeursfuifChiro\beursfuif\obj\Release\net6.0-windows\ref\beursfuif.dll
