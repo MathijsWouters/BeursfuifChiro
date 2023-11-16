@@ -1,0 +1,87 @@
+﻿<Window x:Class="BeursfuifAdvanced.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Beursfuif" Height="768" Width="1365"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF2D2D30">
+
+    <Window.Resources>
+        <!-- Button Style -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF3E3E42"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="4" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}">
+                                    <ContentPresenter.Margin>
+                                        <Thickness Left="20" Top="0" Right="20" Bottom="0"/>
+                                    </ContentPresenter.Margin>
+                                </ContentPresenter>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Title Style -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <!-- TitleBar Grid -->
+        <Grid DockPanel.Dock="Top" Height="40" Background="Black">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Side Buttons -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Content="Beurs" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="Add drinks" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="Delete" Style="{StaticResource ButtonStyle}"/>
+            </StackPanel>
+
+            <!-- Title "Beursfuif" -->
+            <TextBlock Grid.Column="1" Text="Beursfuif" Style="{StaticResource TitleStyle}"/>
+
+            <!-- Right Side Buttons -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Content="Start feest" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="Stop feest" Style="{StaticResource ButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+        <!-- Main Content -->
+        <Grid DockPanel.Dock="Bottom" Background="#FF2D2D30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Drink Buttons Grid -->
+            <!-- ... -->
+
+            <!-- Main Content Area -->
+            <!-- ... -->
+
+            <!-- Summary Area -->
+            <!-- ... -->
+        </Grid>
+    </DockPanel>
+</Window>
